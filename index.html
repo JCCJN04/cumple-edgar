@@ -1,482 +1,208 @@
 <!DOCTYPE html>
-<html lang="es">
+<html class="light" lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invitación 50 Años Edgar</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      --bg-color: #080808;
-      --gold-main: #d4af37;
-      --gold-accent: #c9a227;
-      --gold-faded: rgba(201, 162, 39, 0.4);
-      --box-bg: #1a1500;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--gold-main);
-      font-family: 'Cormorant Garamond', serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Bokeh Background */
-    .ambient-bg {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      z-index: 1;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .bokeh {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(201,162,39,0.18) 0%, rgba(8,8,8,0) 65%);
-      animation: pulse 8s infinite alternate ease-in-out;
-    }
-    .b1 { width: 450px; height: 450px; top: -100px; left: -100px; animation-delay: 0s; }
-    .b2 { width: 500px; height: 500px; bottom: -5%; right: -150px; animation-delay: -3s; }
-    .b3 { width: 350px; height: 350px; top: 40%; left: 10%; animation-delay: -5s; }
-
-    @keyframes pulse {
-      0% { transform: scale(0.9); opacity: 0.6; }
-      100% { transform: scale(1.1); opacity: 1; }
-    }
-
-    /* Sparkles */
-    .sparkle {
-      position: absolute;
-      width: 4px; height: 4px;
-      background: #fff;
-      border-radius: 50%;
-      box-shadow: 0 0 8px 3px rgba(255, 235, 100, 0.8);
-      animation: twinkle 3s infinite ease-in-out;
-    }
-    .s1 { top: 15%; left: 80%; animation-delay: 0.5s; }
-    .s2 { top: 75%; left: 15%; animation-delay: 1.2s; }
-    .s3 { top: 85%; left: 80%; animation-delay: 0.8s; }
-    .s4 { top: 10%; left: 25%; animation-delay: 2.1s; }
-    .s5 { top: 45%; left: 90%; animation-delay: 1.5s; }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0; transform: scale(0.5); }
-      50% { opacity: 1; transform: scale(1.5); }
-    }
-
-    /* Essential Container and Card */
-    .card-wrapper {
-      position: relative;
-      z-index: 10;
-      padding: 24px;
-      width: 100%;
-      max-width: 480px;
-    }
-
-    .card {
-      background-color: rgba(8, 8, 8, 0.96);
-      border: 2px solid var(--gold-accent);
-      outline: 1px solid var(--gold-accent);
-      outline-offset: 8px;
-      padding: 3rem 2rem;
-      text-align: center;
-      /* Subtle inner/outer shadows to raise the card */
-      box-shadow: 0 0 50px rgba(0,0,0,0.9), inset 0 0 20px rgba(0,0,0,0.6);
-    }
-
-    /* Typography Features */
-    .script {
-      font-family: 'Great Vibes', cursive;
-      font-weight: 400;
-      letter-spacing: 1px;
-    }
-
-    .text-giant {
-      font-family: 'Great Vibes', cursive;
-      font-size: 7.5rem;
-      line-height: 0.9;
-      margin: 0.5rem 0;
-      text-shadow: 0 0 10px rgba(212,175,55,0.4), 0 0 25px rgba(212,175,55,0.2);
-      animation: glow 2.5s infinite alternate ease-in-out;
-    }
-
-    @keyframes glow {
-      0% { text-shadow: 0 0 10px rgba(212,175,55,0.4), 0 0 20px rgba(212,175,55,0.2); }
-      100% { text-shadow: 0 0 20px rgba(212,175,55,0.8), 0 0 35px rgba(212,175,55,0.6); }
-    }
-
-    .title-sub {
-      font-size: 2.6rem;
-      margin-bottom: -15px;
-    }
-
-    .title-sub-bottom {
-      font-size: 2.6rem;
-      margin-top: -15px;
-    }
-
-    .divider {
-      width: 80%;
-      border-top: 1px solid var(--gold-faded);
-      margin: 2.2rem auto;
-    }
-
-    /* Info Grid */
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      margin: 1.5rem 0;
-      gap: 10px;
-    }
-
-    .info-grid .vert-line {
-      width: 1px;
-      height: 90%;
-      min-height: 80px;
-      background-color: var(--gold-faded);
-    }
-
-    .info-grid .col {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .info-grid .script {
-      font-size: 2.8rem;
-      line-height: 1;
-      margin-bottom: 5px;
-    }
-
-    .info-grid .date-num {
-      font-size: 2.8rem;
-      font-weight: 600;
-      line-height: 1;
-      letter-spacing: 2px;
-    }
-
-    .info-grid .date-month, .info-grid .time-text {
-      font-size: 1.05rem;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      margin-top: 8px;
-    }
-
-    .time-text {
-      margin-top: 12px;
-      line-height: 1.4;
-    }
-
-    /* Venue */
-    .venue-name {
-      font-size: 2.8rem;
-      margin-bottom: 1.2rem;
-      line-height: 1.1;
-    }
-
-    .address-hint {
-      font-size: 1.15rem;
-      font-style: italic;
-      opacity: 0.9;
-      margin: 0 auto;
-      line-height: 1.4;
-      max-width: 95%;
-    }
-
-    /* Countdown */
-    .countdown {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin: 2.8rem 0;
-    }
-
-    .countdown-box {
-      background-color: var(--box-bg);
-      border: 1px solid var(--gold-accent);
-      padding: 14px 10px;
-      min-width: 70px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .countdown-box span {
-      font-size: 2.2rem;
-      font-weight: 600;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .countdown-box p {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin: 0;
-      color: rgba(212, 175, 55, 0.85);
-    }
-
-    .countdown-finished {
-      font-size: 3.5rem;
-      margin: 2.8rem 0;
-      color: #ffeba1;
-      display: none;
-    }
-
-    /* Button & Bottom Section */
-    .btn-maps {
-      display: inline-block;
-      border: 1px solid var(--gold-main);
-      color: var(--gold-main);
-      text-decoration: none;
-      text-transform: uppercase;
-      font-weight: 600;
-      letter-spacing: 2px;
-      padding: 14px 28px;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      background-color: transparent;
-      margin-bottom: 2.5rem;
-    }
-
-    .btn-maps:hover {
-      background-color: var(--gold-main);
-      color: var(--bg-color);
-      box-shadow: 0 0 20px rgba(212,175,55,0.4);
-    }
-
-    .dress-code {
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .gift-pref-text {
-      font-size: 1.15rem;
-      font-style: italic;
-      opacity: 0.9;
-      margin-top: 1.5rem;
-      margin-bottom: 0.2rem;
-      line-height: 1.3;
-    }
-
-    .gift-pref {
-      font-size: 2.2rem;
-      opacity: 0.95;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 480px) {
-      .card-wrapper {
-        padding: 20px;
-      }
-      .card {
-        padding: 2.5rem 1.2rem;
-        outline-offset: 6px;
-      }
-      .text-giant {
-        font-size: 6rem;
-      }
-      .countdown {
-        gap: 8px;
-      }
-      .countdown-box {
-        min-width: 60px;
-        padding: 10px 5px;
-      }
-      .countdown-box span {
-        font-size: 1.8rem;
-      }
-      .countdown-box p {
-        font-size: 0.65rem;
-      }
-    }
-
-    /* ── Floating mute button ────────────────────────── */
-    #mute-btn {
-      position: fixed;
-      bottom: 22px;
-      right: 22px;
-      z-index: 500;
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      background: rgba(212,175,55,0.15);
-      border: 1px solid var(--gold-accent);
-      color: var(--gold-main);
-      font-size: 1.3rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(6px);
-      transition: background 0.25s;
-    }
-    #mute-btn:hover {
-      background: rgba(212,175,55,0.3);
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Invitación 50 Años Edgar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Great+Vibes&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-container-high":"#efe7da","inverse-primary":"#e9c349","surface-container-low":"#fbf3e5","on-background":"#1f1b13","secondary-fixed":"#d6e4f9","surface-variant":"#eae1d4","on-tertiary":"#ffffff","inverse-surface":"#343027","error":"#ba1a1a","background":"#fdf8ef","on-primary-fixed":"#241a00","on-tertiary-fixed":"#1b1d0e","on-surface":"#1f1b13","error-container":"#ffdad6","on-secondary":"#ffffff","on-error-container":"#93000a","surface-container-highest":"#eae1d4","primary":"#b38b36","on-error":"#ffffff","secondary":"#525f71","surface-dim":"#e1d9cc","tertiary-fixed":"#e4e4cc","on-surface-variant":"#4d4635","surface":"#fff8f0","on-secondary-container":"#566475","outline-variant":"#d0c5af","on-secondary-fixed-variant":"#3a4859","on-primary-container":"#554300","on-tertiary-container":"#454634","surface-container":"#f5eddf","secondary-container":"#d3e1f6","tertiary-fixed-dim":"#c8c8b0","surface-container-lowest":"#ffffff","on-secondary-fixed":"#0f1c2c","surface-bright":"#fff8f0","primary-container":"#d4af37","tertiary-container":"#b4b49d","primary-fixed-dim":"#e9c349","surface-tint":"#b38b36","primary-fixed":"#ffe088","outline":"#7f7663","on-primary-fixed-variant":"#574500","on-tertiary-fixed-variant":"#474836","on-primary":"#ffffff","tertiary":"#5e604d","secondary-fixed-dim":"#bac8dc","inverse-on-surface":"#f8f0e2","navy":"#0a1930","gold":"#c5a059","gold-light":"#e8d08d"},"fontFamily":{"headline-gold":["Plus Jakarta Sans"],"label-caps":["Inter"],"display-script":["Great Vibes"],"serif-elegant":["Noto Serif"],"body-elegant":["Plus Jakarta Sans"]},"backgroundImage":{"dot-pattern":"url('data:image/svg+xml;utf8,<svg width=\"20\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"2\" cy=\"2\" r=\"1\" fill=\"%23e6d5b8\" opacity=\"0.5\"/></svg>')","gold-gradient":"linear-gradient(135deg, #e8d08d 0%, #c5a059 50%, #9e7a33 100%)","navy-gradient":"linear-gradient(90deg, #051024 0%, #0a1930 50%, #051024 100%)"}}}}
+</script>
+<style>
+body{min-height:max(884px,100dvh);}
+.text-shadow-gold{text-shadow:2px 2px 4px rgba(197,160,89,0.4);}
+.text-3d-gold{background:linear-gradient(160deg,#ffe566 0%,#d4a017 35%,#c9a227 60%,#9e7c15 85%,#c9a227 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 10px rgba(201,162,39,0.6));}
+.double-border{position:relative;border:1px solid #c5a059;border-radius:8px;}
+.double-border::before{content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:1px solid #c5a059;border-radius:4px;pointer-events:none;}
+.ribbon{position:relative;background:#0a1930;color:white;}
+.ribbon::before,.ribbon::after{content:'';position:absolute;top:0;bottom:0;width:30px;background:#0a1930;z-index:-1;}
+.ribbon::before{left:-15px;clip-path:polygon(100% 0,0 0,50% 50%,0 100%,100% 100%);}
+.ribbon::after{right:-15px;clip-path:polygon(0 0,100% 0,50% 50%,100% 100%,0 100%);}
+.cd-box{background:#0a1930;border:1px solid #9e7a33;border-top:2px solid #c5a059;padding:10px 8px 8px;min-width:62px;display:flex;flex-direction:column;align-items:center;border-radius:2px;}
+.cd-num{font-family:'Noto Serif',serif;font-size:1.8rem;font-weight:700;color:#e8d08d;line-height:1;margin-bottom:4px;}
+.cd-unit{font-family:'Inter',sans-serif;font-size:.55rem;text-transform:uppercase;letter-spacing:1.5px;color:rgba(197,160,89,.75);}
+#mute-btn{position:fixed;bottom:20px;right:20px;z-index:500;width:44px;height:44px;border-radius:50%;background:rgba(10,25,48,.2);border:1px solid #c5a059;color:#c5a059;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);transition:background .25s;}
+#mute-btn:hover{background:rgba(10,25,48,.4);}
+</style>
 </head>
-<body>
+<body class="bg-background text-on-background min-h-screen font-body-elegant relative overflow-x-hidden bg-dot-pattern">
 
-  <!-- Background audio (loop) -->
-  <audio id="bg-audio" src="https://cumple-edgar.vercel.app/cancion.mp3" loop preload="auto"></audio>
+<audio id="bg-audio" src="https://cumple-edgar.vercel.app/cancion.mp3" loop preload="auto"></audio>
+<button id="mute-btn" title="Silenciar/Activar música">&#9834;</button>
 
-  <!-- Floating mute toggle -->
-  <button id="mute-btn" title="Silenciar/Activar música">&#9834;</button>
 
-  <!-- Background Effects -->
-  <div class="ambient-bg">
-    <div class="bokeh b1"></div>
-    <div class="bokeh b2"></div>
-    <div class="bokeh b3"></div>
 
-    <div class="sparkle s1"></div>
-    <div class="sparkle s2"></div>
-    <div class="sparkle s3"></div>
-    <div class="sparkle s4"></div>
-    <div class="sparkle s5"></div>
-  </div>
+<main class="w-full max-w-[600px] mx-auto px-4 pt-8 pb-8 flex flex-col items-center text-center relative z-10">
 
-  <!-- Main Card -->
-  <div class="card-wrapper">
-    <div class="card">
-      
-      <p class="script title-sub">Edgar cumple........</p>
-      <h1 class="text-giant">50</h1>
-      <p class="script title-sub-bottom">Años</p>
-
-      <div class="divider"></div>
-
-      <div class="info-grid">
-        <div class="col">
-          <p class="script">Sábado</p>
-          <p class="date-num">20</p>
-          <p class="date-month">Junio 2026</p>
-        </div>
-        <div class="vert-line"></div>
-        <div class="col">
-          <p class="time-text">5:30 PM<br>a<br>11:00 PM</p>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <h2 class="script venue-name">La Quinta Fortuna<br>Jardín Campestre</h2>
-      <p class="address-hint">"Nos encontramos justo frente a la entrada al Pichón, está la entrada a La Fortuna. Son aprox. 3 min desde ahí."</p>
-
-      <!-- Live Countdown -->
-      <div class="countdown" id="countdown">
-        <div class="countdown-box">
-          <span id="cd-days">00</span>
-          <p>Días</p>
-        </div>
-        <div class="countdown-box">
-          <span id="cd-hours">00</span>
-          <p>Horas</p>
-        </div>
-        <div class="countdown-box">
-          <span id="cd-mins">00</span>
-          <p>Min</p>
-        </div>
-        <div class="countdown-box">
-          <span id="cd-secs">00</span>
-          <p>Seg</p>
-        </div>
-      </div>
-      <div id="countdown-finished" class="script countdown-finished">
-        ¡Ya es la fiesta!
-      </div>
-
-      <a href="https://maps.app.goo.gl/wZu3nmJ39CLGwjwJ8?g_st=ic" target="_blank" class="btn-maps">Ver ubicación en Maps</a>
-
-      <p class="gift-pref-text">Tu presencia es el regalo más importante,<br>pero si desean obsequiarme algo...</p>
-      <p class="script gift-pref">un sobre será bienvenido</p>
-
+  <!-- Hero Graphics -->
+  <div class="w-full relative h-48 md:h-64 mb-8">
+    <div class="absolute -top-4 -left-4 md:-top-8 md:-left-8 w-40 h-40 md:w-56 md:h-56 z-20">
+      <img alt="Disco ball" class="w-full h-full object-contain drop-shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB71Q5EUupMj3Dvje9t4K2gW7oL_6RcE_3hLDKfwaFWlOS5rdIGQyxxEQS8rqDvve1rfw6i-Evn8N8naOjsoCkSHU31MEvP32q-72FbNBsqf8WM2Y2CmMrDA_qGi-oabuH_OGdr1ctidkH6kcJNMpPOVB7LTBpqb6bdTkwAEVvNlIFYcOVZpVugvVFthhe9a6j04QGySGF6dAkkGgOqtgwN4LdubxqUSJuCoNSqwjRZyQwg2JAUn2BUcklMUUElvf5Z1f9P4QD6HoU" style="mix-blend-mode:multiply;filter:brightness(1.2) contrast(1.1) sepia(0.3) hue-rotate(-10deg);border-radius:50%;"/>
+    </div>
+    <div class="absolute top-4 -right-2 md:top-8 md:-right-8 w-32 h-24 md:w-48 md:h-32 z-20 rotate-12">
+      <img alt="Cassette tape" class="w-full h-full object-contain drop-shadow-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6WcWL_mnqYwNLyND6OwOEnafKpJbCn-TzWAFkao37IbinZnteK6tKtYTA8EZVtjaVRy_TsFbj3BOUZ1-pA-yrb8LHzk3ISnEO62uFRxDdcJWKSiV2UI46P3_EsKjgstgfAGQVV5Rj7grA7JSbSAoTNlG_tl8XV-SzS5OJSV7OKnMd60tDAmBZx2OF_tAWFrZyMeFsrZGWB_GAElGkCYJGQA-o8v_-fsHvsbVsCkEUDajmVHbANTYIPGq0ztYdAWtlQu7EH5Tq9UQ" style="mix-blend-mode:multiply;filter:sepia(0.5) hue-rotate(200deg);"/>
+    </div>
+    <div class="absolute inset-0 pointer-events-none z-0">
+      <span class="material-symbols-outlined absolute top-10 left-1/3 text-gold text-4xl rotate-12 opacity-80">music_note</span>
+      <span class="material-symbols-outlined absolute top-32 left-1/4 text-gold text-6xl -rotate-12 opacity-80">music_cast</span>
+      <span class="material-symbols-outlined absolute top-20 right-1/4 text-gold text-3xl rotate-45 opacity-80">star</span>
+      <span class="material-symbols-outlined absolute top-40 right-1/3 text-gold text-2xl -rotate-12 opacity-80">music_note</span>
+      <div class="absolute top-1/2 left-1/2 w-1 h-1 bg-gold rounded-full shadow-[0_0_8px_2px_#c5a059]"></div>
+      <div class="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-gold rounded-full shadow-[0_0_8px_2px_#c5a059]"></div>
     </div>
   </div>
 
-  <!-- Main Script -->
-  <script>
-    // ── Audio ─────────────────────────────────────────────
-    const audio   = document.getElementById('bg-audio');
-    const muteBtn = document.getElementById('mute-btn');
+  <!-- Title -->
+  <div class="flex flex-col items-center z-30 -mt-16 md:-mt-24">
+    <h1 class="font-display-script text-7xl md:text-9xl text-navy text-shadow-gold leading-none -rotate-2 mb-2">Edgar</h1>
+    <div class="flex items-center gap-4 w-full justify-center mb-4">
+      <div class="h-px bg-gold w-12 md:w-24"></div>
+      <h2 class="font-label-caps text-sm md:text-base text-navy tracking-[0.4em] font-bold">CUMPLE</h2>
+      <div class="h-px bg-gold w-12 md:w-24"></div>
+    </div>
+    <div class="relative flex items-center justify-center my-6">
+      <span class="text-[140px] md:text-[200px] font-serif-elegant font-bold text-3d-gold leading-none tracking-tighter">50</span>
+      <span class="font-display-script text-5xl md:text-7xl text-navy absolute bottom-4 -right-12 md:-right-20 -rotate-6 text-shadow-gold">A&ntilde;os</span>
+    </div>
+  </div>
 
-    // Try autoplay immediately; if blocked, start on first interaction
-    audio.volume = 0.7;
-    audio.play().catch(() => {
-      const startAudio = () => {
-        audio.play();
-        document.removeEventListener('click', startAudio);
-        document.removeEventListener('touchstart', startAudio);
-        document.removeEventListener('keydown', startAudio);
-      };
-      document.addEventListener('click', startAudio);
-      document.addEventListener('touchstart', startAudio);
-      document.addEventListener('keydown', startAudio);
-    });
+  <!-- Intro text -->
+  <div class="flex flex-col items-center text-center max-w-sm mt-8 mb-10 z-30">
+    <p class="font-label-caps text-xs md:text-sm text-navy tracking-widest font-bold mb-2">
+      LOS 50 NO SE CUMPLEN TODOS LOS D&Iacute;AS...<br/>Y ESTA OCASI&Oacute;N MERECE CELEBRARSE
+    </p>
+    <p class="font-display-script text-3xl text-gold-light tracking-wide -rotate-2">como en los mejores tiempos.</p>
+  </div>
 
-    // Mute toggle
-    muteBtn.addEventListener('click', () => {
-      audio.muted = !audio.muted;
-      muteBtn.innerHTML = audio.muted ? '&#128263;' : '&#9834;';
-    });
+  <!-- Ribbon -->
+  <div class="w-full flex flex-col items-center mb-10 z-30">
+    <p class="font-label-caps text-xs text-navy tracking-widest font-bold mb-3 uppercase">EST&Aacute;S INVITADO A CELEBRAR LOS</p>
+    <div class="ribbon w-[90%] md:w-[80%] py-3 px-4 flex justify-center items-center shadow-lg relative border-y border-gold">
+      <div class="flex items-center gap-3">
+        <div class="flex flex-col gap-1"><div class="w-8 h-0.5 bg-gold"></div><div class="w-8 h-0.5 bg-gold"></div></div>
+        <h3 class="font-label-caps text-lg md:text-xl text-white tracking-[0.3em] font-bold">50 A&Ntilde;OS DE EDGAR</h3>
+        <div class="flex flex-col gap-1"><div class="w-8 h-0.5 bg-gold"></div><div class="w-8 h-0.5 bg-gold"></div></div>
+      </div>
+    </div>
+  </div>
 
-    // ── Countdown ─────────────────────────────────────────
-    // Target Date: June 20, 2026 at 5:30 PM (Monterrey time is UTC-6 all year)
-    const targetDate = new Date("2026-06-20T17:30:00-06:00").getTime();
+  <!-- Event description -->
+  <div class="text-center max-w-sm mb-10 z-30">
+    <p class="font-label-caps text-xs md:text-sm text-navy tracking-widest font-bold leading-relaxed">
+      EN UNA NOCHE ELEGANTE, DIVERTIDA Y<br/>LLENA DE LOS GRANDES &Eacute;XITOS<br/>QUE NUNCA PASAN DE MODA. <span class="text-gold">&#9829;</span>
+    </p>
+  </div>
 
-    const elDays = document.getElementById('cd-days');
-    const elHours = document.getElementById('cd-hours');
-    const elMins = document.getElementById('cd-mins');
-    const elSecs = document.getElementById('cd-secs');
-    const countdownContainer = document.getElementById('countdown');
-    const finishedMessage = document.getElementById('countdown-finished');
+  <!-- Details Box -->
+  <div class="w-full double-border bg-white/40 backdrop-blur-sm p-6 md:p-8 mb-10 z-30">
+    <div class="grid grid-cols-3 gap-4 items-start relative z-10">
+      <div class="flex flex-col items-center justify-center border-r border-gold/30 pr-2">
+        <span class="material-symbols-outlined text-3xl text-navy mb-2">calendar_month</span>
+        <p class="font-display-script text-3xl text-gold-light -rotate-2 mb-1">S&aacute;bado</p>
+        <p class="font-serif-elegant text-4xl text-navy font-bold leading-none mb-1">20</p>
+        <p class="font-label-caps text-[10px] text-navy tracking-widest font-bold">JUNIO 2026</p>
+      </div>
+      <div class="flex flex-col items-center justify-center border-r border-gold/30 px-2 h-full">
+        <span class="material-symbols-outlined text-3xl text-gold-light mb-3">schedule</span>
+        <p class="font-label-caps text-xs text-navy tracking-wider font-bold">5:30 PM</p>
+        <p class="font-label-caps text-xs text-gold tracking-wider font-bold my-1">A</p>
+        <p class="font-label-caps text-xs text-navy tracking-wider font-bold mb-1">11:00 PM</p>
+        <p class="font-label-caps text-[10px] text-gold tracking-wider font-bold">CENA &middot; 8:00 PM</p>
+        <p class="font-label-caps text-[10px] text-gold tracking-wider font-bold mt-1">BAILE &middot; 9–11 PM</p>
+      </div>
+      <div class="flex flex-col items-center justify-center pl-2">
+        <span class="material-symbols-outlined text-3xl text-navy mb-2">location_on</span>
+        <p class="font-label-caps text-[10px] text-navy tracking-widest font-bold mb-1">QUINTA</p>
+        <p class="font-display-script text-3xl text-gold-light -rotate-2 mb-2">Fortuna</p>
+        <p class="font-label-caps text-[10px] text-navy tracking-widest font-bold text-center">JARD&Iacute;N CAMPESTRE</p>
+      </div>
+    </div>
+    <div class="mt-5 border-t border-gold/20 pt-4">
+      <p class="font-serif-elegant text-sm text-navy/70 italic">Frente a la entrada al Pich&oacute;n &middot; aprox. 3 min desde ah&iacute;</p>
+    </div>
+  </div>
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
+  <!-- Countdown -->
+  <div class="w-full flex flex-col items-center mb-10 z-30">
+    <p class="font-label-caps text-[10px] tracking-[4px] font-bold uppercase mb-4" style="color:#9e7a33;">CUENTA REGRESIVA</p>
+    <div class="flex gap-2 justify-center" id="countdown">
+      <div class="cd-box"><span class="cd-num" id="cd-days">00</span><span class="cd-unit">D&Iacute;AS</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-unit">HORAS</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-mins">00</span><span class="cd-unit">MIN</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-unit">SEG</span></div>
+    </div>
+    <p class="font-display-script text-4xl text-gold hidden mt-2" id="countdown-finished">&iexcl;Ya es la fiesta!</p>
+  </div>
 
-      if (distance <= 0) {
-        countdownContainer.style.display = 'none';
-        finishedMessage.style.display = 'block';
-        return;
-      }
+  <!-- Ambient info -->
+  <div class="w-full flex flex-col items-center text-center z-30 mb-12">
+    <div class="flex items-center justify-center gap-2 mb-2">
+      <span class="material-symbols-outlined text-gold text-sm">star</span>
+      <p class="font-label-caps text-xs text-navy tracking-widest font-bold">HABR&Aacute; BUENA M&Uacute;SICA, BRINDIS, RISAS...</p>
+      <span class="material-symbols-outlined text-gold text-sm">star</span>
+    </div>
+    <p class="font-label-caps text-[10px] text-navy tracking-widest font-bold mb-6">Y UNA PISTA LISTA PARA RECORDAR LOS 80s Y 90s COMO SE DEBE.</p>
+    <div class="w-full bg-navy py-4 px-8 relative overflow-hidden flex justify-center items-center -rotate-1 shadow-lg max-w-md mx-auto" style="clip-path:polygon(2% 0,98% 2%,100% 98%,0 100%);">
+      <p class="font-display-script text-3xl md:text-4xl text-white tracking-wide z-10">Prep&aacute;rate para una velada inolvidable.</p>
+    </div>
+  </div>
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const secs = Math.floor((distance % (1000 * 60)) / 1000);
+  <!-- Maps button -->
+  <a href="https://maps.app.goo.gl/wZu3nmJ39CLGwjwJ8?g_st=ic" target="_blank"
+     class="inline-block mb-10 z-30 bg-navy text-gold-light font-label-caps text-xs tracking-widest font-bold px-8 py-3 border border-gold/50 hover:bg-gold hover:text-navy transition-all duration-300">
+    &#128205; VER UBICACI&Oacute;N EN MAPS
+  </a>
 
-      elDays.innerText = days.toString().padStart(2, '0');
-      elHours.innerText = hours.toString().padStart(2, '0');
-      elMins.innerText = mins.toString().padStart(2, '0');
-      elSecs.innerText = secs.toString().padStart(2, '0');
-    }
+  <!-- Dress Code + Footer graphics -->
+  <div class="w-full relative flex justify-center items-center min-h-[160px] z-30 mb-8">
+    <div class="absolute -left-12 -bottom-12 w-48 h-48 md:w-56 md:h-56 z-20">
+      <img alt="Vinyl record" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPD8t9f0-K-72T3AwzlnPEiqooAEE4gfmzCMkK5vIzlR3V2m9xbyAVc1sodcB1CI9961tWfZt9UPXd-J_Zq7_cVfe0M6EnguDSYWzq4tpVdltBm7gOzBHoN-WpusjxRF7LYJd_Utv5sXnjDOMEKzMZOPpyDKalD4p6ArQGBSYOkQFf2N8UoaingtOK66esF7SesJz98IEFSg688_qfGMvr5LAFh85RAhZ5VFgAlik_qmotK_sxtW0QmBy3oLGdn-zZdDi1i2-wGAE" style="mix-blend-mode:multiply;filter:contrast(1.2);"/>
+    </div>
+    <div class="absolute -right-8 -bottom-8 w-40 h-24 md:w-48 md:h-32 z-20 rotate-12">
+      <img alt="Gold shutter shades" class="w-full h-full object-contain drop-shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8y_ktkU_Mq9CluFNn6xKhnS4j1sBBThYplv5k35uNSgTzxFKnE6F0NZzxL78PXY8_BLe6GHHaUi-YfHksJZP4yEGKLIdSAUnHgE8x-4U-s-1J5nYH15eQpNwSPuG1q-FxWGMZSlZFDSCDbhZI0qqG_lRFefoMCGTgrchQqD8q4RwvAHhMi5_AuZl4A6Ly6sA8uPsQE4KTWW2aKtRYDTGlkPKsldYY7Gf7Seh5ktFIUp6CBPBWyXM6l6nAM8rHdL1SnsHyGHVCIzQ" style="mix-blend-mode:multiply;filter:sepia(0.8) hue-rotate(10deg) saturate(2);"/>
+    </div>
+    <div class="double-border bg-white/60 backdrop-blur-sm py-3 px-8 text-center z-30 bg-dot-pattern">
+      <span class="material-symbols-outlined text-navy absolute -top-4 left-1/2 -translate-x-1/2 bg-background px-2">styler</span>
+      <p class="font-label-caps text-[10px] text-navy tracking-widest mb-1 mt-2">C&Oacute;DIGO DE VESTIMENTA:</p>
+      <p class="font-label-caps text-sm text-navy tracking-widest font-bold">FORMAL / ELEGANTE</p>
+    </div>
+  </div>
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  </script>
+  <!-- Gift + Final -->
+  <div class="text-center z-30 mt-16 mb-8">
+    <p class="font-serif-elegant text-base text-navy/75 italic mb-3">
+      Tu presencia es el regalo m&aacute;s importante,<br>pero si deseas obsequiarme algo...
+    </p>
+    <p class="font-display-script text-4xl text-gold mb-4">un sobre ser&aacute; bienvenido</p>
+    <div class="h-px w-full bg-gold/30 max-w-xs mx-auto mb-4"></div>
+    <p class="font-label-caps text-[10px] text-navy tracking-widest font-bold mb-4 uppercase opacity-70">Tu presencia ser&aacute; parte de esta gran celebraci&oacute;n.</p>
+    <p class="font-display-script text-4xl text-gold-light -rotate-2">&iexcl;No faltes! <span class="text-navy text-2xl inline-block align-middle ml-1">&#9829;</span></p>
+  </div>
+
+</main>
+
+
+
+<script>
+  const audio=document.getElementById('bg-audio'),muteBtn=document.getElementById('mute-btn');
+  audio.volume=0.7;
+  audio.play().catch(()=>{
+    const s=()=>{audio.play();['click','touchstart','keydown'].forEach(e=>document.removeEventListener(e,s));};
+    ['click','touchstart','keydown'].forEach(e=>document.addEventListener(e,s));
+  });
+  muteBtn.addEventListener('click',()=>{audio.muted=!audio.muted;muteBtn.innerHTML=audio.muted?'&#128263;':'&#9834;';});
+  const target=new Date("2026-06-20T17:30:00-06:00").getTime();
+  function tick(){
+    const d=target-Date.now();
+    if(d<=0){document.getElementById('countdown').style.display='none';document.getElementById('countdown-finished').classList.remove('hidden');return;}
+    document.getElementById('cd-days').innerText=String(Math.floor(d/86400000)).padStart(2,'0');
+    document.getElementById('cd-hours').innerText=String(Math.floor((d%86400000)/3600000)).padStart(2,'0');
+    document.getElementById('cd-mins').innerText=String(Math.floor((d%3600000)/60000)).padStart(2,'0');
+    document.getElementById('cd-secs').innerText=String(Math.floor((d%60000)/1000)).padStart(2,'0');
+  }
+  tick();setInterval(tick,1000);
+</script>
 </body>
 </html>
