@@ -39,18 +39,101 @@ body{min-height:max(884px,100dvh);}
   <!-- Hero Graphics -->
   <div class="w-full relative h-48 md:h-64 mb-8">
     <div class="absolute -top-4 -left-4 md:-top-8 md:-left-8 w-40 h-40 md:w-56 md:h-56 z-20">
-      <img alt="Disco ball" class="w-full h-full object-contain drop-shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB71Q5EUupMj3Dvje9t4K2gW7oL_6RcE_3hLDKfwaFWlOS5rdIGQyxxEQS8rqDvve1rfw6i-Evn8N8naOjsoCkSHU31MEvP32q-72FbNBsqf8WM2Y2CmMrDA_qGi-oabuH_OGdr1ctidkH6kcJNMpPOVB7LTBpqb6bdTkwAEVvNlIFYcOVZpVugvVFthhe9a6j04QGySGF6dAkkGgOqtgwN4LdubxqUSJuCoNSqwjRZyQwg2JAUn2BUcklMUUElvf5Z1f9P4QD6HoU" style="mix-blend-mode:multiply;filter:brightness(1.2) contrast(1.1) sepia(0.3) hue-rotate(-10deg);border-radius:50%;"/>
+      <!-- Golden disco ball SVG -->
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-2xl" style="filter:drop-shadow(0 0 18px rgba(212,175,55,0.7));">
+        <defs>
+          <radialGradient id="ballGrad" cx="38%" cy="32%" r="62%">
+            <stop offset="0%" stop-color="#fff8c0"/>
+            <stop offset="30%" stop-color="#f0c040"/>
+            <stop offset="65%" stop-color="#c5a020"/>
+            <stop offset="100%" stop-color="#7a5c00"/>
+          </radialGradient>
+          <clipPath id="ballClip"><circle cx="100" cy="100" r="90"/></clipPath>
+        </defs>
+        <circle cx="100" cy="100" r="90" fill="url(#ballGrad)"/>
+        <!-- mirror tiles -->
+        <g clip-path="url(#ballClip)" opacity="0.85">
+          <!-- Row 1 -->
+          <rect x="10" y="20" width="22" height="14" rx="2" fill="#ffe87a" opacity="0.9" transform="rotate(-8,21,27)"/>
+          <rect x="38" y="14" width="22" height="14" rx="2" fill="#ffd040" opacity="0.85" transform="rotate(4,49,21)"/>
+          <rect x="66" y="10" width="22" height="14" rx="2" fill="#fff0a0" opacity="0.9" transform="rotate(-4,77,17)"/>
+          <rect x="94" y="8" width="22" height="14" rx="2" fill="#f5c030" opacity="0.85" transform="rotate(6,105,15)"/>
+          <rect x="122" y="12" width="22" height="14" rx="2" fill="#ffe060" opacity="0.9" transform="rotate(-6,133,19)"/>
+          <rect x="150" y="18" width="22" height="14" rx="2" fill="#ffd840" opacity="0.85" transform="rotate(5,161,25)"/>
+          <!-- Row 2 -->
+          <rect x="6" y="42" width="22" height="14" rx="2" fill="#f5c030" opacity="0.8" transform="rotate(5,17,49)"/>
+          <rect x="32" y="36" width="22" height="14" rx="2" fill="#fff0a0" opacity="0.9" transform="rotate(-6,43,43)"/>
+          <rect x="60" y="32" width="22" height="14" rx="2" fill="#ffd040" opacity="0.85" transform="rotate(4,71,39)"/>
+          <rect x="88" y="30" width="22" height="14" rx="2" fill="#ffe87a" opacity="0.9" transform="rotate(-5,99,37)"/>
+          <rect x="116" y="32" width="22" height="14" rx="2" fill="#f5c030" opacity="0.8" transform="rotate(6,127,39)"/>
+          <rect x="144" y="36" width="22" height="14" rx="2" fill="#fff0a0" opacity="0.85" transform="rotate(-4,155,43)"/>
+          <rect x="168" y="42" width="22" height="14" rx="2" fill="#ffd840" opacity="0.8" transform="rotate(5,179,49)"/>
+          <!-- Row 3 -->
+          <rect x="4" y="64" width="22" height="14" rx="2" fill="#ffe060" opacity="0.85" transform="rotate(-5,15,71)"/>
+          <rect x="28" y="58" width="22" height="14" rx="2" fill="#ffd040" opacity="0.9" transform="rotate(4,39,65)"/>
+          <rect x="56" y="54" width="22" height="14" rx="2" fill="#fff8c0" opacity="0.9" transform="rotate(-4,67,61)"/>
+          <rect x="84" y="52" width="22" height="14" rx="2" fill="#f5c030" opacity="0.85" transform="rotate(6,95,59)"/>
+          <rect x="112" y="54" width="22" height="14" rx="2" fill="#ffe87a" opacity="0.9" transform="rotate(-6,123,61)"/>
+          <rect x="140" y="58" width="22" height="14" rx="2" fill="#ffd840" opacity="0.85" transform="rotate(4,151,65)"/>
+          <rect x="166" y="64" width="22" height="14" rx="2" fill="#fff0a0" opacity="0.8" transform="rotate(-5,177,71)"/>
+          <!-- Row 4 -->
+          <rect x="4" y="86" width="22" height="14" rx="2" fill="#f5c030" opacity="0.8" transform="rotate(4,15,93)"/>
+          <rect x="26" y="80" width="22" height="14" rx="2" fill="#ffe060" opacity="0.9" transform="rotate(-5,37,87)"/>
+          <rect x="54" y="76" width="22" height="14" rx="2" fill="#ffd040" opacity="0.85" transform="rotate(5,65,83)"/>
+          <rect x="82" y="74" width="22" height="14" rx="2" fill="#fff8c0" opacity="0.9" transform="rotate(-4,93,81)"/>
+          <rect x="110" y="76" width="22" height="14" rx="2" fill="#f5c030" opacity="0.85" transform="rotate(6,121,83)"/>
+          <rect x="138" y="80" width="22" height="14" rx="2" fill="#ffe87a" opacity="0.9" transform="rotate(-5,149,87)"/>
+          <rect x="164" y="86" width="22" height="14" rx="2" fill="#ffd840" opacity="0.8" transform="rotate(4,175,93)"/>
+          <!-- Row 5 -->
+          <rect x="6" y="108" width="22" height="14" rx="2" fill="#ffe060" opacity="0.85" transform="rotate(-4,17,115)"/>
+          <rect x="28" y="102" width="22" height="14" rx="2" fill="#fff0a0" opacity="0.9" transform="rotate(5,39,109)"/>
+          <rect x="56" y="98" width="22" height="14" rx="2" fill="#ffd040" opacity="0.85" transform="rotate(-5,67,105)"/>
+          <rect x="84" y="96" width="22" height="14" rx="2" fill="#f5c030" opacity="0.9" transform="rotate(4,95,103)"/>
+          <rect x="112" y="98" width="22" height="14" rx="2" fill="#ffe87a" opacity="0.85" transform="rotate(-4,123,105)"/>
+          <rect x="140" y="102" width="22" height="14" rx="2" fill="#fff8c0" opacity="0.9" transform="rotate(5,151,109)"/>
+          <rect x="166" y="108" width="22" height="14" rx="2" fill="#ffd840" opacity="0.85" transform="rotate(-4,177,115)"/>
+          <!-- Row 6 -->
+          <rect x="10" y="130" width="22" height="14" rx="2" fill="#f5c030" opacity="0.8" transform="rotate(5,21,137)"/>
+          <rect x="34" y="124" width="22" height="14" rx="2" fill="#ffe060" opacity="0.85" transform="rotate(-5,45,131)"/>
+          <rect x="62" y="120" width="22" height="14" rx="2" fill="#fff0a0" opacity="0.9" transform="rotate(4,73,127)"/>
+          <rect x="90" y="118" width="22" height="14" rx="2" fill="#ffd040" opacity="0.85" transform="rotate(-4,101,125)"/>
+          <rect x="118" y="120" width="22" height="14" rx="2" fill="#f5c030" opacity="0.9" transform="rotate(5,129,127)"/>
+          <rect x="146" y="124" width="22" height="14" rx="2" fill="#ffe87a" opacity="0.85" transform="rotate(-5,157,131)"/>
+          <rect x="168" y="130" width="22" height="14" rx="2" fill="#fff8c0" opacity="0.8" transform="rotate(4,179,137)"/>
+          <!-- Row 7 -->
+          <rect x="18" y="152" width="22" height="14" rx="2" fill="#ffd840" opacity="0.8" transform="rotate(-5,29,159)"/>
+          <rect x="44" y="148" width="22" height="14" rx="2" fill="#f5c030" opacity="0.85" transform="rotate(4,55,155)"/>
+          <rect x="72" y="144" width="22" height="14" rx="2" fill="#ffe060" opacity="0.9" transform="rotate(-4,83,151)"/>
+          <rect x="100" y="142" width="22" height="14" rx="2" fill="#fff0a0" opacity="0.85" transform="rotate(5,111,149)"/>
+          <rect x="128" y="144" width="22" height="14" rx="2" fill="#ffd040" opacity="0.9" transform="rotate(-5,139,151)"/>
+          <rect x="154" y="148" width="22" height="14" rx="2" fill="#ffe87a" opacity="0.85" transform="rotate(4,165,155)"/>
+          <!-- Highlight sparkles -->
+          <circle cx="55" cy="45" r="5" fill="white" opacity="0.9"/>
+          <circle cx="80" cy="30" r="3" fill="white" opacity="0.85"/>
+          <circle cx="120" cy="50" r="4" fill="white" opacity="0.8"/>
+          <circle cx="40" cy="70" r="3" fill="white" opacity="0.75"/>
+        </g>
+        <!-- Shine overlay -->
+        <ellipse cx="70" cy="60" rx="28" ry="18" fill="white" opacity="0.18"/>
+        <!-- Hanging rod -->
+        <rect x="96" y="0" width="8" height="14" rx="3" fill="#c5a020"/>
+      </svg>
     </div>
     <div class="absolute top-4 -right-2 md:top-8 md:-right-8 w-32 h-24 md:w-48 md:h-32 z-20 rotate-12">
       <img alt="Cassette tape" class="w-full h-full object-contain drop-shadow-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6WcWL_mnqYwNLyND6OwOEnafKpJbCn-TzWAFkao37IbinZnteK6tKtYTA8EZVtjaVRy_TsFbj3BOUZ1-pA-yrb8LHzk3ISnEO62uFRxDdcJWKSiV2UI46P3_EsKjgstgfAGQVV5Rj7grA7JSbSAoTNlG_tl8XV-SzS5OJSV7OKnMd60tDAmBZx2OF_tAWFrZyMeFsrZGWB_GAElGkCYJGQA-o8v_-fsHvsbVsCkEUDajmVHbANTYIPGq0ztYdAWtlQu7EH5Tq9UQ" style="mix-blend-mode:multiply;filter:sepia(0.5) hue-rotate(200deg);"/>
     </div>
     <div class="absolute inset-0 pointer-events-none z-0">
-      <span class="material-symbols-outlined absolute top-10 left-1/3 text-gold text-4xl rotate-12 opacity-80">music_note</span>
-      <span class="material-symbols-outlined absolute top-32 left-1/4 text-gold text-6xl -rotate-12 opacity-80">music_cast</span>
+      <span class="material-symbols-outlined absolute top-6 left-1/3 text-gold text-4xl rotate-12 opacity-80">music_note</span>
+      <span class="material-symbols-outlined absolute top-28 left-1/4 text-gold text-5xl -rotate-12 opacity-75">music_note</span>
+      <span class="material-symbols-outlined absolute top-2 left-1/2 text-gold text-3xl rotate-6 opacity-70">music_note</span>
+      <span class="material-symbols-outlined absolute top-16 left-[55%] text-gold text-2xl -rotate-6 opacity-80">music_note</span>
+      <span class="material-symbols-outlined absolute top-36 right-1/3 text-gold text-3xl -rotate-12 opacity-80">music_note</span>
+      <span class="material-symbols-outlined absolute top-8 right-1/3 text-gold text-xl rotate-20 opacity-70">music_note</span>
       <span class="material-symbols-outlined absolute top-20 right-1/4 text-gold text-3xl rotate-45 opacity-80">star</span>
-      <span class="material-symbols-outlined absolute top-40 right-1/3 text-gold text-2xl -rotate-12 opacity-80">music_note</span>
+      <span class="material-symbols-outlined absolute top-44 left-[40%] text-gold text-2xl rotate-12 opacity-75">music_note</span>
       <div class="absolute top-1/2 left-1/2 w-1 h-1 bg-gold rounded-full shadow-[0_0_8px_2px_#c5a059]"></div>
       <div class="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-gold rounded-full shadow-[0_0_8px_2px_#c5a059]"></div>
+      <div class="absolute top-3/4 left-1/3 w-1 h-1 bg-gold rounded-full shadow-[0_0_8px_2px_#c5a059]"></div>
     </div>
   </div>
 
@@ -161,12 +244,12 @@ body{min-height:max(884px,100dvh);}
       <img alt="Vinyl record" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPD8t9f0-K-72T3AwzlnPEiqooAEE4gfmzCMkK5vIzlR3V2m9xbyAVc1sodcB1CI9961tWfZt9UPXd-J_Zq7_cVfe0M6EnguDSYWzq4tpVdltBm7gOzBHoN-WpusjxRF7LYJd_Utv5sXnjDOMEKzMZOPpyDKalD4p6ArQGBSYOkQFf2N8UoaingtOK66esF7SesJz98IEFSg688_qfGMvr5LAFh85RAhZ5VFgAlik_qmotK_sxtW0QmBy3oLGdn-zZdDi1i2-wGAE" style="mix-blend-mode:multiply;filter:contrast(1.2);"/>
     </div>
     <div class="absolute -right-8 -bottom-8 w-40 h-24 md:w-48 md:h-32 z-20 rotate-12">
-      <img alt="Gold shutter shades" class="w-full h-full object-contain drop-shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8y_ktkU_Mq9CluFNn6xKhnS4j1sBBThYplv5k35uNSgTzxFKnE6F0NZzxL78PXY8_BLe6GHHaUi-YfHksJZP4yEGKLIdSAUnHgE8x-4U-s-1J5nYH15eQpNwSPuG1q-FxWGMZSlZFDSCDbhZI0qqG_lRFefoMCGTgrchQqD8q4RwvAHhMi5_AuZl4A6Ly6sA8uPsQE4KTWW2aKtRYDTGlkPKsldYY7Gf7Seh5ktFIUp6CBPBWyXM6l6nAM8rHdL1SnsHyGHVCIzQ" style="mix-blend-mode:multiply;filter:sepia(0.8) hue-rotate(10deg) saturate(2);"/>
+      <img alt="Gold shutter shades" class="w-full h-full object-contain drop-shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8y_ktkU_Mq9CluFNn6xKhnS4j1sBBThYplv5k35uNSgTzxFKnE6F0NZzxL78PXY8_BLe6GHHaUi-YfHksJZP4yEGKLIdSAUnHgE8x-4U-s-1J5nYH15eQpNwSPuG1q-FxWGMZSlZFDSCDbhZI0qqG_lRFefoMCGTgrchQqD8q4RwvAHhMi5_AuZl4A6Ly6sA8uPsQE4KTWW2aKtRYDTGlkPKsldYY7Gf7Seh5ktFIUp6CBPBWyXM6l6nAM8rHdL1SnsHyGHVCIzQ" style="filter:sepia(1) saturate(4) hue-rotate(5deg) brightness(1.1) contrast(1.1);"/>
     </div>
     <div class="double-border bg-white/60 backdrop-blur-sm py-3 px-8 text-center z-30 bg-dot-pattern">
       <span class="material-symbols-outlined text-navy absolute -top-4 left-1/2 -translate-x-1/2 bg-background px-2">styler</span>
       <p class="font-label-caps text-[10px] text-navy tracking-widest mb-1 mt-2">C&Oacute;DIGO DE VESTIMENTA:</p>
-      <p class="font-label-caps text-sm text-navy tracking-widest font-bold">FORMAL / ELEGANTE</p>
+      <p class="font-label-caps text-sm text-navy tracking-widest font-bold">FORMAL / CASUAL</p>
     </div>
   </div>
 
