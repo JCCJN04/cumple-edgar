@@ -21,14 +21,14 @@
           "on-secondary": "#561f00",
           "primary-fixed-dim": "#ffb4ac",
           "on-error-container": "#ffdad6",
-          "surface-variant": "#462f2d",
+          "surface-variant": "#1a1a1a",
           "outline": "#af8783",
           "primary": "#ffb4ac",
           "on-primary-container": "#fff9f9",
           "inverse-primary": "#c00016",
           "surface-tint": "#ffb4ac",
-          "surface-container-highest": "#462f2d",
-          "surface-dim": "#200e0d",
+          "surface-container-highest": "#111111",
+          "surface-dim": "#000000",
           "on-background": "#ffdad6",
           "tertiary-fixed": "#cfe5ff",
           "on-error": "#690005",
@@ -36,10 +36,10 @@
           "tertiary": "#99cbff",
           "on-secondary-fixed": "#351000",
           "on-tertiary": "#003355",
-          "surface-container-low": "#2a1614",
-          "surface-container": "#2e1a18",
+          "surface-container-low": "#0a0a0a",
+          "surface-container": "#0d0d0d",
           "on-tertiary-fixed-variant": "#004a78",
-          "outline-variant": "#5e3f3b",
+          "outline-variant": "#222222",
           "secondary": "#ffb693",
           "on-secondary-container": "#572000",
           "error": "#ffb4ab",
@@ -49,18 +49,18 @@
           "inverse-surface": "#ffdad6",
           "secondary-fixed-dim": "#ffb693",
           "tertiary-fixed-dim": "#99cbff",
-          "background": "#200e0d",
-          "inverse-on-surface": "#412b29",
+          "background": "#000000",
+          "inverse-on-surface": "#111111",
           "on-surface": "#ffdad6",
           "tertiary-container": "#0078bf",
           "secondary-container": "#fe6b00",
           "on-primary-fixed-variant": "#93000e",
-          "surface-container-high": "#3a2422",
-          "surface-container-lowest": "#1a0908",
+          "surface-container-high": "#161616",
+          "surface-container-lowest": "#050505",
           "on-tertiary-fixed": "#001d34",
-          "surface-bright": "#4b3331",
+          "surface-bright": "#222222",
           "error-container": "#93000a",
-          "surface": "#200e0d",
+          "surface": "#000000",
           "primary-fixed": "#ffdad6",
           "on-secondary-fixed-variant": "#7a3000",
           "on-surface-variant": "#e9bcb7",
@@ -146,67 +146,88 @@
   <div class="absolute inset-0 bg-scanlines pointer-events-none z-0"></div>
 
   <!-- Top Neon Bar -->
-  <div class="w-full bg-jordan-red text-white font-label-pixel text-label-pixel text-center py-2 relative z-10 border-b-2 border-white tracking-widest uppercase">
+  <div class="w-full font-label-pixel text-label-pixel text-center py-2 relative z-10 border-b-2 border-white tracking-widest uppercase" style="background:#ff6600;color:#fff;text-shadow:0 0 8px #ff6600,0 0 16px #ff6600;box-shadow:0 0 12px #ff6600;">
     ★ ESTÁS INVITADO ★
   </div>
 
   <!-- Top App Bar -->
-  <header class="flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50 bg-surface/90 backdrop-blur-sm border-b-4 border-primary">
-    <h1 class="text-headline-lg-mobile font-headline-lg-mobile text-primary italic uppercase">THE FINALS 50</h1>
-    <div class="flex gap-4">
-      <span class="material-symbols-outlined text-primary cursor-pointer hover:text-secondary-container transition-colors">celebration</span>
-      <span class="material-symbols-outlined text-primary cursor-pointer hover:text-secondary-container transition-colors">share</span>
-    </div>
-  </header>
 
   <!-- Main Content Area -->
   <div class="flex-1 relative z-10 flex flex-col px-6 py-8">
 
     <!-- Hero / Title Section -->
-    <div class="relative text-center mb-10">
+    <div class="relative text-center mb-10" style="overflow:hidden;">
+      <!-- Matrix rain fondo -->
+      <canvas id="matrix-edgar" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
       <!-- Watermark Age -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[180px] font-display-lg text-surface-container-highest opacity-50 z-0 leading-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[180px] font-display-lg text-surface-container-highest opacity-50 z-1 leading-none">
         50
       </div>
-      <!-- Glitch Name -->
-      <div class="relative z-10 flex justify-center mb-2">
-        <span class="relative inline-block uppercase tracking-tighter" style="font-family:'Bebas Neue'; font-size:84px; line-height:1;">
-          <!-- sombra roja (abajo-derecha) -->
-          <span class="absolute" style="left:4px; top:4px; color:#e8001d; opacity:0.9; font-family:'Bebas Neue'; font-size:84px;">EDGAR</span>
-          <!-- fantasma cyan (glitch sutil) -->
-          <span class="absolute" style="left:-2px; top:-1px; color:#0ff; opacity:0.35; font-family:'Bebas Neue'; font-size:84px;">EDGAR</span>
-          <!-- texto principal -->
-          <span style="position:relative; color:#fff;">EDGAR</span>
-        </span>
+      <!-- Matrix Name -->
+      <div class="relative z-10 flex justify-center mb-2" style="overflow:visible; padding-bottom:20px;">
+        <div class="relative inline-block" style="font-family:'Bebas Neue'; font-size:84px; line-height:1;">
+          <!-- Texto EDGAR verde Matrix -->
+          <span style="
+            position:relative;
+            z-index:2;
+            color:#00ff41;
+            font-family:'Bebas Neue';
+            font-size:84px;
+            text-shadow: 0 0 8px #00ff41, 0 0 20px #00ff41, 0 0 50px #00b330, 2px 2px 0 #003300;
+            animation: edgar-pulse 2s ease-in-out infinite;
+          ">EDGAR</span>
+        </div>
       </div>
-      <div class="font-label-pixel text-label-pixel text-primary uppercase border-t border-b border-surface-variant py-2 mt-4 inline-block tracking-widest bg-surface-container px-4">
-        EDICIÓN ANIVERSARIO
-      </div>
+
+      <style>
+        @keyframes edgar-pulse {
+          0%, 100% { text-shadow: 0 0 8px #00ff41, 0 0 20px #00ff41, 0 0 50px #00b330, 2px 2px 0 #003300; }
+          50%       { text-shadow: 0 0 15px #00ff41, 0 0 40px #00ff41, 0 0 80px #00ff41, 2px 2px 0 #003300; }
+        }
+      </style>
     </div>
 
     <!-- Court Divider -->
-    <div class="flex items-center justify-center gap-2 mb-8 opacity-80">
-      <div class="h-px bg-jordan-red w-full"></div>
-      <div class="w-3 h-3 rounded-full bg-jordan-red shadow-[0_0_10px_#e8001d]"></div>
-      <div class="w-4 h-4 rounded-full border-2 border-jordan-red"></div>
-      <div class="w-3 h-3 rounded-full bg-jordan-red shadow-[0_0_10px_#e8001d]"></div>
-      <div class="h-px bg-jordan-red w-full"></div>
+    <div class="flex items-center justify-center gap-2 mb-8">
+      <div class="h-px w-full" style="background:#ff8800;box-shadow:0 0 6px #ff8800;"></div>
+      <div class="w-3 h-3 rounded-full" style="background:#ff8800;box-shadow:0 0 10px #ff8800;"></div>
+      <div class="w-4 h-4 rounded-full border-2" style="border-color:#ff8800;box-shadow:0 0 8px #ff8800;"></div>
+      <div class="w-3 h-3 rounded-full" style="background:#ff8800;box-shadow:0 0 10px #ff8800;"></div>
+      <div class="h-px w-full" style="background:#ff8800;box-shadow:0 0 6px #ff8800;"></div>
     </div>
 
     <!-- Intro text -->
     <div class="text-center mb-8 px-2">
-      <p class="font-label-pixel text-label-pixel text-on-surface-variant leading-relaxed">
+      <p class="font-label-pixel text-label-pixel leading-relaxed" style="
+        color: #00ff41;
+        text-shadow: 0 0 8px #00ff41, 0 0 20px #00ff41, 0 0 40px #00b330;
+        font-family: 'VT323', monospace;
+        font-size: 1.2rem;
+        letter-spacing: 0.05em;
+        animation: matrix-flicker 3s infinite;
+      ">
         Los 50 no se cumplen todos los días...<br/>
         esta ocasión merece celebrarse<br/>
-        <span class="text-primary">como en los mejores tiempos.</span>
+        <span style="color:#39ff14; text-shadow: 0 0 10px #39ff14, 0 0 25px #39ff14;">como en los mejores tiempos.</span>
       </p>
     </div>
+
+    <style>
+      @keyframes matrix-flicker {
+        0%, 100% { opacity: 1; text-shadow: 0 0 8px #00ff41, 0 0 20px #00ff41, 0 0 40px #00b330; }
+        92% { opacity: 1; }
+        93% { opacity: 0.7; text-shadow: 0 0 4px #00ff41; }
+        94% { opacity: 1; }
+        96% { opacity: 0.85; }
+        97% { opacity: 1; text-shadow: 0 0 12px #00ff41, 0 0 30px #00ff41, 0 0 60px #00b330; }
+      }
+    </style>
 
     <!-- Details Block -->
     <div class="flex flex-col gap-6 mb-8">
 
       <!-- Date / Time -->
-      <div class="flex justify-between border-2 border-white p-4 bg-surface-dim relative overflow-hidden">
+      <div class="flex justify-between p-4 bg-surface-dim relative overflow-hidden" style="border:2px solid #ff2d9e;box-shadow:0 0 8px #ff2d9e,0 0 20px #ff2d9e,inset 0 0 8px rgba(255,45,158,0.15);">
         <div class="relative z-10">
           <p class="font-label-pixel text-primary mb-1 uppercase">Fecha</p>
           <p class="font-headline-lg-mobile text-headline-lg-mobile text-white leading-none">JUN 20, 2026</p>
@@ -220,27 +241,27 @@
       </div>
 
       <!-- Schedule detail -->
-      <div class="border border-surface-variant p-4 bg-surface-container-low flex items-start gap-4">
+      <div class="p-4 bg-surface-container-low flex items-start gap-4" style="border:2px solid #00c8ff;box-shadow:0 0 8px #00c8ff,0 0 20px #00c8ff,inset 0 0 8px rgba(0,200,255,0.1);">
         <span class="material-symbols-outlined text-jordan-red text-3xl">schedule</span>
         <div class="w-full">
           <p class="font-label-pixel text-primary mb-2 uppercase">Programa</p>
           <div class="flex justify-between">
-            <span class="font-body-md text-on-surface-variant">Recepción</span>
-            <span class="font-body-md text-white">5:30 PM</span>
+            <span class="font-body-md" style="color:#00c8ff;text-shadow:0 0 8px #00c8ff,0 0 16px #00c8ff;">Recepción</span>
+            <span class="font-body-md" style="color:#00c8ff;text-shadow:0 0 8px #00c8ff,0 0 16px #00c8ff;">5:30 PM</span>
           </div>
           <div class="flex justify-between">
-            <span class="font-body-md text-on-surface-variant">Cena</span>
-            <span class="font-body-md text-white">8:00 PM</span>
+            <span class="font-body-md" style="color:#00c8ff;text-shadow:0 0 8px #00c8ff,0 0 16px #00c8ff;">Cena</span>
+            <span class="font-body-md" style="color:#00c8ff;text-shadow:0 0 8px #00c8ff,0 0 16px #00c8ff;">7:00 PM</span>
           </div>
           <div class="flex justify-between">
-            <span class="font-body-md text-on-surface-variant">Baile</span>
-            <span class="font-body-md text-white">9:00 – 11:00 PM</span>
+            <span class="font-body-md" style="color:#00c8ff;text-shadow:0 0 8px #00c8ff,0 0 16px #00c8ff;">Baile</span>
+            <span class="font-body-md" style="color:#00c8ff;text-shadow:0 0 8px #00c8ff,0 0 16px #00c8ff;">8:00 – 11:00 PM</span>
           </div>
         </div>
       </div>
 
       <!-- Location -->
-      <div class="border border-surface-variant p-4 bg-surface-container-low flex items-start gap-4">
+      <div class="p-4 bg-surface-container-low flex items-start gap-4" style="border:2px solid #00ff41;box-shadow:0 0 8px #00ff41,0 0 20px #00ff41,inset 0 0 8px rgba(0,255,65,0.1);">
         <span class="material-symbols-outlined text-jordan-red text-3xl">location_on</span>
         <div>
           <p class="font-label-pixel text-primary mb-1 uppercase">El Lugar</p>
@@ -251,7 +272,7 @@
       </div>
 
       <!-- Dress Code -->
-      <div class="border border-surface-variant p-4 bg-surface-container-low flex items-start gap-4">
+      <div class="p-4 bg-surface-container-low flex items-start gap-4" style="border:2px solid #ff8800;box-shadow:0 0 8px #ff8800,0 0 20px #ff8800,inset 0 0 8px rgba(255,136,0,0.1);">
         <span class="material-symbols-outlined text-neon-orange text-3xl">styler</span>
         <div>
           <p class="font-label-pixel text-primary mb-1 uppercase">Vestimenta</p>
@@ -261,22 +282,22 @@
 
     </div>
 
-    <!-- Air Jordan Graphic -->
-    <div style="display:flex; justify-content:center; padding: 4px 0 20px;">
-      <img
-        alt="Air Jordan"
-        src="https://cumple-edgar.vercel.app/Air Jordan 1 High Red.png"
-        style="
-          width: 280px;
-          transform: rotate(-8deg);
-          mix-blend-mode: multiply;
-          filter: drop-shadow(0 8px 24px rgba(232,0,29,0.4));
-        "
-      />
+    <!-- Disco Ball 3D -->
+    <div style="display:flex; justify-content:center; padding: 20px 0 28px;">
+      <div style="position:relative; width:220px; height:260px;">
+
+        <!-- hilo -->
+        <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:35px;background:linear-gradient(to bottom,rgba(255,255,255,0.6),rgba(255,255,255,0.1));"></div>
+
+        <canvas id="disco-canvas" style="position:absolute;top:35px;left:50%;transform:translateX(-50%);"></canvas>
+
+        <!-- sombra suelo -->
+        <div style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:120px;height:16px;background:radial-gradient(ellipse,rgba(255,255,255,0.15) 0%,transparent 70%);border-radius:50%;"></div>
+      </div>
     </div>
 
     <!-- Vibe -->
-    <div class="text-center mb-8 border border-surface-variant p-4 bg-surface-container-low">
+    <div class="text-center mb-8 p-4 bg-surface-container-low" style="border:2px solid #ff2d9e;box-shadow:0 0 8px #ff2d9e,0 0 20px #ff2d9e,inset 0 0 8px rgba(255,45,158,0.1);">
       <p class="font-label-pixel text-label-pixel text-on-surface-variant leading-loose">
         ★ Buena música, brindis, risas... ★<br/>
         Una pista lista para recordar los<br/>
@@ -288,20 +309,20 @@
     <div class="mb-8">
       <p class="font-label-pixel text-label-pixel text-primary text-center uppercase mb-4 tracking-widest">Cuenta Regresiva</p>
       <div id="countdown" class="flex gap-2 justify-center">
-        <div class="bg-surface-dim border border-surface-variant border-t-2 border-t-jordan-red p-3 min-w-[66px] flex flex-col items-center">
-          <span class="font-headline-lg-mobile text-headline-lg-mobile text-primary leading-none mb-1" id="cd-days">00</span>
+        <div class="bg-surface-dim p-3 min-w-[66px] flex flex-col items-center" style="border:2px solid #00c8ff;box-shadow:0 0 8px #00c8ff,0 0 16px #00c8ff;">
+          <span class="font-headline-lg-mobile text-headline-lg-mobile leading-none mb-1" id="cd-days" style="color:#00c8ff;text-shadow:0 0 8px #00c8ff,0 0 20px #00c8ff;">00</span>
           <span class="font-label-pixel text-xs text-on-surface-variant uppercase">Días</span>
         </div>
-        <div class="bg-surface-dim border border-surface-variant border-t-2 border-t-jordan-red p-3 min-w-[66px] flex flex-col items-center">
-          <span class="font-headline-lg-mobile text-headline-lg-mobile text-primary leading-none mb-1" id="cd-hours">00</span>
+        <div class="bg-surface-dim p-3 min-w-[66px] flex flex-col items-center" style="border:2px solid #00c8ff;box-shadow:0 0 8px #00c8ff,0 0 16px #00c8ff;">
+          <span class="font-headline-lg-mobile text-headline-lg-mobile leading-none mb-1" id="cd-hours" style="color:#00c8ff;text-shadow:0 0 8px #00c8ff,0 0 20px #00c8ff;">00</span>
           <span class="font-label-pixel text-xs text-on-surface-variant uppercase">Horas</span>
         </div>
-        <div class="bg-surface-dim border border-surface-variant border-t-2 border-t-jordan-red p-3 min-w-[66px] flex flex-col items-center">
-          <span class="font-headline-lg-mobile text-headline-lg-mobile text-primary leading-none mb-1" id="cd-mins">00</span>
+        <div class="bg-surface-dim p-3 min-w-[66px] flex flex-col items-center" style="border:2px solid #00c8ff;box-shadow:0 0 8px #00c8ff,0 0 16px #00c8ff;">
+          <span class="font-headline-lg-mobile text-headline-lg-mobile leading-none mb-1" id="cd-mins" style="color:#00c8ff;text-shadow:0 0 8px #00c8ff,0 0 20px #00c8ff;">00</span>
           <span class="font-label-pixel text-xs text-on-surface-variant uppercase">Min</span>
         </div>
-        <div class="bg-surface-dim border border-surface-variant border-t-2 border-t-jordan-red p-3 min-w-[66px] flex flex-col items-center">
-          <span class="font-headline-lg-mobile text-headline-lg-mobile text-primary leading-none mb-1" id="cd-secs">00</span>
+        <div class="bg-surface-dim p-3 min-w-[66px] flex flex-col items-center" style="border:2px solid #00c8ff;box-shadow:0 0 8px #00c8ff,0 0 16px #00c8ff;">
+          <span class="font-headline-lg-mobile text-headline-lg-mobile leading-none mb-1" id="cd-secs" style="color:#00c8ff;text-shadow:0 0 8px #00c8ff,0 0 20px #00c8ff;">00</span>
           <span class="font-label-pixel text-xs text-on-surface-variant uppercase">Seg</span>
         </div>
       </div>
@@ -310,18 +331,18 @@
 
     <!-- Maps CTA -->
     <a href="https://maps.app.goo.gl/wZu3nmJ39CLGwjwJ8?g_st=ic" target="_blank"
-       class="w-full bg-surface-container text-white font-headline-lg-mobile text-headline-lg-mobile py-4 uppercase tracking-widest border-2 border-primary hover:bg-primary hover:text-surface transition-all duration-200 mb-4 flex items-center justify-center gap-2 no-underline">
+       class="w-full bg-surface-container text-white font-headline-lg-mobile text-headline-lg-mobile py-4 uppercase tracking-widest transition-all duration-200 mb-4 flex items-center justify-center gap-2 no-underline" style="border:2px solid #00ff41;box-shadow:0 0 8px #00ff41,0 0 20px #00ff41;">
       <span class="material-symbols-outlined">location_on</span>
       VER UBICACIÓN
     </a>
 
     <!-- Gift -->
-    <div class="text-center border border-surface-variant p-6 bg-surface-container-low mb-8">
-      <p class="font-label-pixel text-label-pixel text-on-surface-variant leading-loose mb-3">
+    <div class="text-center p-6 bg-surface-container-low mb-8" style="border:2px solid #ffee00;box-shadow:0 0 8px #ffee00,0 0 20px #ffee00,inset 0 0 8px rgba(255,238,0,0.08);">
+      <p class="font-label-pixel leading-loose mb-3" style="font-size:1.75rem;color:#ff2d9e;text-shadow:0 0 8px #ff2d9e,0 0 20px #ff2d9e;">
         Tu presencia es el regalo más importante,<br/>
         pero si deseas obsequiarme algo...
       </p>
-      <p class="font-headline-lg-mobile text-headline-lg-mobile text-primary uppercase tracking-wider">un sobre será bienvenido</p>
+      <p class="font-headline-lg-mobile text-primary uppercase tracking-wider" style="font-size:1.3rem;color:#ffee00;text-shadow:0 0 8px #ffee00,0 0 20px #ffee00;">un sobre será bienvenido</p>
     </div>
 
     <!-- Court Divider -->
@@ -334,18 +355,216 @@
     </div>
 
     <!-- Final message -->
-    <p class="text-center font-headline-lg-mobile text-headline-lg-mobile text-white uppercase tracking-widest mb-2">¡No Faltes! ♥</p>
+    <p class="text-center font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-widest mb-2" style="color:#00ff41;text-shadow:0 0 8px #00ff41,0 0 20px #00ff41,0 0 50px #00b330,2px 2px 0 #003300;animation:edgar-pulse 2s ease-in-out infinite;">¡No Faltes! ♥</p>
 
   </div>
 
   <!-- Bottom Neon Bar -->
-  <div class="w-full bg-jordan-red text-white font-label-pixel text-label-pixel text-center py-2 relative z-10 border-t-2 border-white tracking-widest uppercase mt-auto">
+  <div class="w-full font-label-pixel text-label-pixel text-center py-2 relative z-10 border-t-2 border-white tracking-widest uppercase mt-auto" style="background:#ff6600;color:#fff;text-shadow:0 0 8px #ff6600,0 0 16px #ff6600;box-shadow:0 0 12px #ff6600;">
     ★ GAME ON ★
   </div>
 
 </main>
 
 <script>
+  // ── Disco Ball 3D ──
+  (function() {
+    const canvas = document.getElementById('disco-canvas');
+    const ctx    = canvas.getContext('2d');
+    const R = 90, W = 200, H = 200;
+    canvas.width  = W;
+    canvas.height = H;
+    const cx = W / 2, cy = H / 2;
+
+    // Light from upper-left
+    const Lx = -0.55, Ly = -0.75, Lz = 0.35;
+    const Llen = Math.sqrt(Lx*Lx + Ly*Ly + Lz*Lz);
+    const lx = Lx/Llen, ly = Ly/Llen, lz = Lz/Llen;
+
+    const FLASH = ['#ff2255','#2299ff','#22ffaa','#ffdd00','#ff44ff','#ff8800'];
+    const ROWS = 18, COLS = 26;
+    let angle = 0;
+
+    function rotY(x, y, z, a) {
+      const c = Math.cos(a), s = Math.sin(a);
+      return { x: x*c + z*s, y, z: -x*s + z*c };
+    }
+
+    function frame() {
+      ctx.clearRect(0, 0, W, H);
+      angle += 0.012;
+
+      const tiles = [];
+
+      for (let ri = 0; ri < ROWS; ri++) {
+        const phi0 = Math.PI * ri / ROWS;
+        const phi1 = Math.PI * (ri + 1) / ROWS;
+        const phiM = Math.PI * (ri + 0.5) / ROWS;
+
+        for (let ci = 0; ci < COLS; ci++) {
+          const th0 = 2 * Math.PI * ci / COLS;
+          const th1 = 2 * Math.PI * (ci + 1) / COLS;
+          const thM = 2 * Math.PI * (ci + 0.5) / COLS;
+
+          // tile normal (center point on unit sphere)
+          let nx = Math.sin(phiM) * Math.cos(thM);
+          let ny = Math.cos(phiM);
+          let nz = Math.sin(phiM) * Math.sin(thM);
+          const rn = rotY(nx, ny, nz, angle);
+
+          // cull back faces
+          if (rn.z < 0) continue;
+
+          // 4 corners
+          const pts = [
+            [phi0, th0],[phi0, th1],[phi1, th1],[phi1, th0]
+          ].map(([p,t]) => {
+            const px = Math.sin(p)*Math.cos(t);
+            const py = Math.cos(p);
+            const pz = Math.sin(p)*Math.sin(t);
+            const rp = rotY(px, py, pz, angle);
+            return { sx: cx + rp.x * R, sy: cy - rp.y * R, z: rp.z };
+          });
+
+          // average z for painter sort
+          const avgZ = pts.reduce((s,p)=>s+p.z,0)/4;
+
+          // diffuse + specular lighting
+          const diff = Math.max(0, rn.x*lx + rn.y*ly + rn.z*lz);
+          // reflect = 2*(n·l)*n - l
+          const ndotl = rn.x*lx + rn.y*ly + rn.z*lz;
+          const rx2 = 2*ndotl*rn.x - lx;
+          const ry2 = 2*ndotl*rn.y - ly;
+          const rz2 = 2*ndotl*rn.z - lz;
+          // view = (0,0,1)
+          const spec = Math.pow(Math.max(0, rz2), 18);
+
+          // color: base silver + colored flash per tile
+          const base  = Math.floor(diff * 110 + 40);
+          const white = Math.min(255, base + Math.floor(spec * 215));
+          const flashIdx = (ri * 7 + ci * 5) % FLASH.length;
+          // flash fires when spec is high for this tile
+          const flashOn = spec > 0.25;
+
+          tiles.push({ pts, avgZ, white, spec, flashIdx, flashOn, diff });
+        }
+      }
+
+      // painter's algorithm: back → front
+      tiles.sort((a, b) => a.avgZ - b.avgZ);
+
+      for (const t of tiles) {
+        ctx.beginPath();
+        ctx.moveTo(t.pts[0].sx, t.pts[0].sy);
+        for (let i = 1; i < t.pts.length; i++)
+          ctx.lineTo(t.pts[i].sx, t.pts[i].sy);
+        ctx.closePath();
+
+        const g = t.white;
+        const gb = Math.min(255, g + 12);
+        ctx.fillStyle = `rgb(${g},${g},${gb})`;
+        ctx.fill();
+
+        if (t.flashOn) {
+          ctx.fillStyle = FLASH[t.flashIdx];
+          ctx.globalAlpha = (t.spec - 0.25) * 1.2;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+
+        // grout line
+        ctx.strokeStyle = 'rgba(0,0,0,0.55)';
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+      }
+
+      // specular hotspot (fixed highlight upper-left)
+      const hg = ctx.createRadialGradient(cx-28, cy-32, 2, cx-22, cy-26, 28);
+      hg.addColorStop(0, 'rgba(255,255,255,0.55)');
+      hg.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = hg;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI*2);
+      ctx.fill();
+
+      requestAnimationFrame(frame);
+    }
+    frame();
+  })();
+
+  // ── Matrix drip on EDGAR ──
+  (function() {
+    const canvas = document.getElementById('matrix-edgar');
+    const ctx    = canvas.getContext('2d');
+
+    function resize() {
+      const parent  = canvas.parentElement;
+      const w = parent.offsetWidth  || 380;
+      const h = parent.offsetHeight || 320;
+      canvas.width  = w;
+      canvas.height = h;
+      canvas.style.width  = w + 'px';
+      canvas.style.height = h + 'px';
+      init();
+    }
+    setTimeout(resize, 100);
+    window.addEventListener('resize', resize);
+
+    const FONT_SIZE = 13;
+    const CHARS     = 'エアウイオカキクEDGAR01サタナハマ10ラワヲン';
+    let cols, drops, trails;
+
+    function init() {
+      cols   = Math.floor(canvas.width / FONT_SIZE);
+      drops  = Array.from({ length: cols }, () => Math.random() * 3);
+      trails = Array.from({ length: cols }, () => []);
+    }
+    init();
+
+    function draw() {
+      // limpiar completamente — sin fondo negro
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = FONT_SIZE + 'px VT323, monospace';
+
+      for (let i = 0; i < cols; i++) {
+        const x = i * FONT_SIZE;
+
+        // dibujar trail con alpha decreciente
+        const trail = trails[i];
+        for (let t = 0; t < trail.length; t++) {
+          const alpha = (t + 1) / trail.length * 0.7;
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle   = '#00b330';
+          ctx.fillText(trail[t].char, x, trail[t].y);
+        }
+
+        // cabeza (más brillante)
+        const y    = drops[i] * FONT_SIZE;
+        const char = CHARS[Math.floor(Math.random() * CHARS.length)];
+        ctx.globalAlpha = 1;
+        ctx.fillStyle   = '#ccffee';
+        ctx.shadowColor = '#00ff41';
+        ctx.shadowBlur  = 8;
+        ctx.fillText(char, x, y);
+        ctx.shadowBlur  = 0;
+
+        // acumular trail (máx 8 pasos)
+        trail.push({ char, y });
+        if (trail.length > 8) trail.shift();
+
+        // resetear cuando sale del canvas
+        if (y > canvas.height) {
+          drops[i]  = Math.random() * 2;
+          trails[i] = [];
+        }
+        drops[i] += 0.35;
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    setInterval(draw, 45);
+  })();
+
   const audio = document.getElementById('bg-audio');
   const muteBtn = document.getElementById('mute-btn');
   audio.volume = 0.7;
