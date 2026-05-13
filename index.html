@@ -347,6 +347,9 @@
 
         <canvas id="disco-canvas" style="position:absolute;top:35px;left:50%;transform:translateX(-50%);"></canvas>
 
+        <!-- Galaga orbit canvas (bigger, centered on ball center) -->
+        <canvas id="orbit-canvas" width="280" height="280" style="position:absolute;top:-5px;left:50%;transform:translateX(-50%);pointer-events:none;z-index:5;"></canvas>
+
         <!-- sombra suelo -->
         <div style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:120px;height:16px;background:radial-gradient(ellipse,rgba(255,255,255,0.15) 0%,transparent 70%);border-radius:50%;"></div>
       </div>
@@ -554,7 +557,155 @@
     frame();
   })();
 
+  // ══ GALAGA SHIPS ORBITING DISCO BALL ═════════════════════════════════════
+  (function() {
+    var oc = document.getElementById('orbit-canvas');
+    if (!oc) return;
+    var ox = oc.getContext('2d');
+    // Canvas is 280×280, ball center is at pixel (140,140) matching disco ball center
+    var OW = 280, OH = 280;
+    var CX = 140, CY = 140; // center of this canvas = center of disco ball
+    var ORBIT_R  = 108; // orbit radius (ball radius 90 + 18px gap)
+    var TILT     = 0.38; // squish y for 3D oval feel
 
+    // ── Galaga Bee pixel sprite (8 cols × 6 rows, P=3)
+    // color index: 1=body(cyan), 2=accent(yellow), 3=wing(white), 0=transparent
+    var SPRITE = [
+      [0,0,1,1,1,1,0,0],
+      [0,1,2,1,1,2,1,0],
+      [1,3,1,1,1,1,3,1],
+      [1,1,1,0,0,1,1,1],
+      [0,2,0,0,0,0,2,0],
+      [0,1,0,0,0,0,1,0]
+    ];
+    var SP = 3; // pixel size
+    var COLS_S = SPRITE[0].length;
+    var ROWS_S = SPRITE.length;
+    var C1 = ['#00eeff','#ffdd00','#ffffff']; // cyan, yellow, white
+
+    var NUM = 4;
+    var ships = [];
+    for (var i = 0; i < NUM; i++) {
+      ships.push({
+        a:      (i / NUM) * Math.PI * 2,
+        speed:  0.016 + i * 0.004,
+        shootT: Math.floor(i * 28),
+        bullets: []
+      });
+    }
+
+    var sparks = [];
+    function boom(bx, by) {
+      var cols = ['#ff4400','#ffcc00','#ff8800','#ffffff'];
+      for (var k = 0; k < 8; k++) {
+        var ang = (k / 8) * Math.PI * 2;
+        sparks.push({ x:bx, y:by,
+          vx: Math.cos(ang)*(Math.random()*2+0.5),
+          vy: Math.sin(ang)*(Math.random()*2+0.5),
+          life:1, c:cols[k%4], s:Math.random()*3+1 });
+      }
+    }
+
+    function drawGalagaShip(cx, cy, facing, sc) {
+      // Draw the sprite centered at (cx,cy), rotated to face 'facing'
+      var hw = (COLS_S * SP) / 2;
+      var hh = (ROWS_S * SP) / 2;
+      ox.save();
+      ox.translate(cx, cy);
+      ox.rotate(facing);
+      ox.scale(sc, sc);
+      for (var r = 0; r < ROWS_S; r++) {
+        for (var c = 0; c < COLS_S; c++) {
+          var ci = SPRITE[r][c];
+          if (!ci) continue;
+          ox.fillStyle = C1[ci - 1];
+          ox.fillRect(-hw + c * SP, -hh + r * SP, SP, SP);
+        }
+      }
+      ox.restore();
+    }
+
+    var fn = 0;
+    function orbitLoop() {
+      requestAnimationFrame(orbitLoop);
+      fn++;
+      ox.clearRect(0, 0, OW, OH);
+
+      ships.forEach(function(s) {
+        s.a += s.speed;
+        var sx = CX + Math.cos(s.a) * ORBIT_R;
+        var sy = CY + Math.sin(s.a) * ORBIT_R * TILT;
+
+        // depth: sin(a) in [-1,1]; front=+1, back=-1
+        var depth = Math.sin(s.a);
+        var sc    = 0.7 + 0.3 * ((depth + 1) / 2);   // 0.7 – 1.0
+        var alpha = 0.5 + 0.5 * ((depth + 1) / 2);    // 0.5 – 1.0
+
+        // ship faces tangent direction
+        var facing = s.a - Math.PI / 2;
+
+        // ── shoot toward ball center
+        s.shootT--;
+        if (s.shootT <= 0) {
+          s.shootT = 80 + Math.floor(Math.random() * 50);
+          var dx = CX - sx, dy = CY - sy;
+          var d  = Math.sqrt(dx*dx + dy*dy) || 1;
+          s.bullets.push({ x:sx, y:sy,
+            vx:(dx/d)*4, vy:(dy/d)*4, life:1 });
+        }
+
+        // ── draw bullets
+        s.bullets = s.bullets.filter(function(b){ return b.life > 0; });
+        s.bullets.forEach(function(b) {
+          b.x += b.vx; b.y += b.vy;
+          var dd = Math.sqrt((b.x-CX)*(b.x-CX)+(b.y-CY)*(b.y-CY));
+          if (dd < 22) { b.life=0; boom(b.x,b.y); return; }
+          b.life -= 0.013;
+          ox.save();
+          ox.globalAlpha = b.life;
+          ox.shadowColor = '#ffff00'; ox.shadowBlur = 8;
+          ox.beginPath();
+          ox.moveTo(b.x, b.y);
+          ox.lineTo(b.x - b.vx*4, b.y - b.vy*4);
+          ox.strokeStyle = '#ffff44'; ox.lineWidth = 2.5; ox.stroke();
+          ox.beginPath(); ox.arc(b.x,b.y,2.5,0,Math.PI*2);
+          ox.fillStyle='#ffffff'; ox.fill();
+          ox.restore();
+        });
+
+        // ── engine exhaust trail
+        ox.save();
+        ox.globalAlpha = alpha * 0.6;
+        var trailX = sx - Math.cos(s.a) * 10;
+        var trailY = sy - Math.sin(s.a) * 10 * TILT;
+        var grad = ox.createRadialGradient(trailX, trailY, 0, trailX, trailY, 8*sc);
+        grad.addColorStop(0, 'rgba(255,120,0,0.8)');
+        grad.addColorStop(1, 'rgba(255,60,0,0)');
+        ox.fillStyle = grad;
+        ox.beginPath(); ox.arc(trailX, trailY, 8*sc, 0, Math.PI*2); ox.fill();
+        ox.restore();
+
+        // ── draw the ship itself
+        ox.save();
+        ox.globalAlpha = alpha;
+        ox.shadowColor = '#00eeff'; ox.shadowBlur = 10;
+        drawGalagaShip(sx, sy, facing, sc);
+        ox.restore();
+      });
+
+      // ── sparks / explosions
+      sparks = sparks.filter(function(p){ return p.life > 0; });
+      sparks.forEach(function(p) {
+        p.x += p.vx; p.y += p.vy; p.life -= 0.05;
+        if (p.life <= 0) return;
+        ox.save(); ox.globalAlpha = p.life;
+        ox.fillStyle = p.c;
+        ox.fillRect(p.x, p.y, p.s, p.s);
+        ox.restore();
+      });
+    }
+    orbitLoop();
+  })();
 
   const audio   = document.getElementById('bg-audio');
   const muteBtn  = document.getElementById('mute-btn');
