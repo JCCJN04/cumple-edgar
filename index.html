@@ -116,7 +116,7 @@
 </head>
 <body class="bg-black text-on-surface flex justify-center items-center min-h-screen font-body-md overflow-x-hidden p-4">
 
-<audio id="bg-audio" src="/cancion.mp3" loop preload="auto"></audio>
+<audio id="bg-audio" src="/cancion.mp3" loop preload="auto" playsinline webkit-playsinline x-webkit-airplay="allow"></audio>
 
 <!-- ══ SPLASH SCREEN ══ -->
 <div id="splash" style="
@@ -624,7 +624,24 @@
   const splash   = document.getElementById('splash');
   audio.volume   = 0.7;
 
-  // Flag para evitar doble disparo (touchstart + click se pueden encadenar)
+  // ── Unlock Web Audio API ──────────────────────────────────────────────────
+  // Necesario para Samsung Internet, UC Browser y Android < 9
+  // Crea un buffer silencioso que "desbloquea" el contexto de audio del browser
+  function unlockWebAudio() {
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      var ctx = new AC();
+      var buf = ctx.createBuffer(1, 1, 22050);
+      var src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.connect(ctx.destination);
+      src.start(0);
+      if (ctx.state === 'suspended') ctx.resume();
+    } catch(ex) { /* browser no soporta WebAudio, continuar igual */ }
+  }
+
+  // ── Función principal de desbloqueo ───────────────────────────────────────
   let splashClosed = false;
 
   function closeSplash(e) {
@@ -632,23 +649,42 @@
     splashClosed = true;
     if (e && e.cancelable) e.preventDefault();
 
-    // load() fuerza al browser a cargar el audio — clave en Android Chrome
-    audio.load();
-    audio.play().catch(err => console.warn('Audio:', err));
+    // 1. Desbloquear WebAudio API (Samsung Internet, Android antiguo)
+    unlockWebAudio();
 
+    // 2. Forzar carga y reproducción del HTML5 Audio
+    audio.load();
+    var p = audio.play();
+    if (p !== undefined) {
+      p.catch(function() {
+        // 3. Fallback: si aún falla, reintentar en cualquier siguiente interacción
+        var retry = function() {
+          audio.play();
+          document.removeEventListener('touchstart', retry);
+          document.removeEventListener('touchend',   retry);
+          document.removeEventListener('click',       retry);
+        };
+        document.addEventListener('touchstart', retry, { once: true });
+        document.addEventListener('touchend',   retry, { once: true });
+        document.addEventListener('click',       retry, { once: true });
+      });
+    }
+
+    // 4. Desvanecer y eliminar el splash
     splash.style.transition = 'opacity 0.6s ease';
     splash.style.opacity    = '0';
-    setTimeout(() => { if (splash.parentNode) splash.parentNode.removeChild(splash); }, 650);
+    setTimeout(function() { if (splash.parentNode) splash.parentNode.removeChild(splash); }, 650);
   }
 
-  // touchstart = disparo inmediato al toque físico → Android lo reconoce como gesto
-  // click = fallback para desktop y browsers sin touch
+  // Escuchar touchstart (Android), touchend (fallback táctil) y click (desktop)
   splash.addEventListener('touchstart', closeSplash, { passive: false });
-  splash.addEventListener('click', closeSplash);
+  splash.addEventListener('touchend',   closeSplash, { passive: false });
+  splash.addEventListener('click',      closeSplash);
 
-  const splashBtn = document.getElementById('splash-btn');
+  var splashBtn = document.getElementById('splash-btn');
   splashBtn.addEventListener('touchstart', function(e) { e.stopPropagation(); closeSplash(e); }, { passive: false });
-  splashBtn.addEventListener('click', function(e) { e.stopPropagation(); closeSplash(e); });
+  splashBtn.addEventListener('touchend',   function(e) { e.stopPropagation(); closeSplash(e); }, { passive: false });
+  splashBtn.addEventListener('click',      function(e) { e.stopPropagation(); closeSplash(e); });
 
   muteBtn.addEventListener('click', () => {
     audio.muted = !audio.muted;
