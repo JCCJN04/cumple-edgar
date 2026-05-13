@@ -215,8 +215,6 @@
 
     <!-- Hero / Title Section -->
     <div class="relative text-center mb-10" style="overflow:hidden;">
-      <!-- Matrix rain fondo -->
-      <canvas id="matrix-edgar" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
       <!-- Watermark Age -->
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[180px] font-display-lg text-surface-container-highest opacity-50 z-1 leading-none">
         50
@@ -550,78 +548,7 @@
     frame();
   })();
 
-  // ── Matrix drip on EDGAR ──
-  (function() {
-    const canvas = document.getElementById('matrix-edgar');
-    const ctx    = canvas.getContext('2d');
 
-    function resize() {
-      const parent  = canvas.parentElement;
-      const w = parent.offsetWidth  || 380;
-      const h = parent.offsetHeight || 320;
-      canvas.width  = w;
-      canvas.height = h;
-      canvas.style.width  = w + 'px';
-      canvas.style.height = h + 'px';
-      init();
-    }
-    setTimeout(resize, 100);
-    window.addEventListener('resize', resize);
-
-    const FONT_SIZE = 13;
-    const CHARS     = 'エアウイオカキクEDGAR01サタナハマ10ラワヲン';
-    let cols, drops, trails;
-
-    function init() {
-      cols   = Math.floor(canvas.width / FONT_SIZE);
-      drops  = Array.from({ length: cols }, () => Math.random() * 3);
-      trails = Array.from({ length: cols }, () => []);
-    }
-    init();
-
-    function draw() {
-      // limpiar completamente — sin fondo negro
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.font = FONT_SIZE + 'px VT323, monospace';
-
-      for (let i = 0; i < cols; i++) {
-        const x = i * FONT_SIZE;
-
-        // dibujar trail con alpha decreciente
-        const trail = trails[i];
-        for (let t = 0; t < trail.length; t++) {
-          const alpha = (t + 1) / trail.length * 0.7;
-          ctx.globalAlpha = alpha;
-          ctx.fillStyle   = '#00b330';
-          ctx.fillText(trail[t].char, x, trail[t].y);
-        }
-
-        // cabeza (más brillante)
-        const y    = drops[i] * FONT_SIZE;
-        const char = CHARS[Math.floor(Math.random() * CHARS.length)];
-        ctx.globalAlpha = 1;
-        ctx.fillStyle   = '#ccffee';
-        ctx.shadowColor = '#00ff41';
-        ctx.shadowBlur  = 8;
-        ctx.fillText(char, x, y);
-        ctx.shadowBlur  = 0;
-
-        // acumular trail (máx 8 pasos)
-        trail.push({ char, y });
-        if (trail.length > 8) trail.shift();
-
-        // resetear cuando sale del canvas
-        if (y > canvas.height) {
-          drops[i]  = Math.random() * 2;
-          trails[i] = [];
-        }
-        drops[i] += 0.35;
-      }
-      ctx.globalAlpha = 1;
-    }
-
-    setInterval(draw, 45);
-  })();
 
   const audio   = document.getElementById('bg-audio');
   const muteBtn  = document.getElementById('mute-btn');
