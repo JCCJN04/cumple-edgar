@@ -118,8 +118,6 @@
 
 <audio id="bg-audio" src="/cumple-edgar/cancion.mp3" loop preload="auto" playsinline webkit-playsinline x-webkit-airplay="allow"></audio>
 
-<!-- ══ GALAGA BACKGROUND CANVAS ══ -->
-<canvas id="galaga-bg" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
 
 <!-- ══ SPLASH SCREEN ══ -->
 <div id="splash" style="
@@ -197,7 +195,10 @@
 ">♪</button>
 
 <!-- Mobile Container -->
-<main class="w-full max-w-[420px] relative border-2 border-surface-variant shadow-[0_0_20px_rgba(232,0,29,0.2)] overflow-hidden flex flex-col" style="background:linear-gradient(to bottom,rgba(8,8,8,0.92),rgba(14,9,0,0.92));z-index:1;">
+<main class="w-full max-w-[420px] relative border-2 border-surface-variant shadow-[0_0_20px_rgba(232,0,29,0.2)] overflow-hidden flex flex-col" style="background:#000;z-index:1;">
+
+  <!-- ══ Galaga canvas DENTRO de la tarjeta ══ -->
+  <canvas id="galaga-bg" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
 
   <!-- Scanlines Overlay -->
   <div class="absolute inset-0 bg-scanlines pointer-events-none z-0"></div>
@@ -715,8 +716,14 @@
     var gc = document.getElementById('galaga-bg');
     var gx = gc.getContext('2d');
     var W, H;
-    function rsz() { W = gc.width = window.innerWidth; H = gc.height = window.innerHeight; }
-    rsz(); window.addEventListener('resize', rsz);
+    function rsz() {
+      var par = gc.parentElement;
+      W = gc.width  = par.offsetWidth  || 420;
+      H = gc.height = par.offsetHeight || window.innerHeight;
+    }
+    // Esperar a que el DOM esté listo para leer dimensiones reales
+    setTimeout(rsz, 50);
+    window.addEventListener('resize', rsz);
 
     // Pixel size
     var P = 2;
@@ -740,27 +747,28 @@
 
     // Stars
     var stars=[];
-    for(var i=0;i<90;i++) stars.push({x:Math.random()*2000,y:Math.random()*2000,s:Math.random()<0.25?2:1,sp:Math.random()*0.7+0.2,a:Math.random()*0.5+0.4});
+    for(var i=0;i<70;i++) stars.push({x:Math.random()*500,y:Math.random()*900,s:Math.random()<0.25?2:1,sp:Math.random()*0.7+0.2,a:Math.random()*0.5+0.4});
 
     // Formation
     var fm=[], fmX=0, fmDir=1;
     function mkFm() {
       fm=[];
+      if(!W) return;
       var rows=[
-        {sp:BSS,cl:SC,n:4,dy:50},
-        {sp:BUT,cl:UC,n:8,dy:80},{sp:BUT,cl:UC,n:8,dy:106},
-        {sp:BEE,cl:BC,n:10,dy:132},{sp:BEE,cl:BC,n:10,dy:158},{sp:BEE,cl:BC,n:10,dy:184}
+        {sp:BSS,cl:SC,n:4,dy:55},
+        {sp:BUT,cl:UC,n:6,dy:85},{sp:BUT,cl:UC,n:6,dy:111},
+        {sp:BEE,cl:BC,n:8,dy:137},{sp:BEE,cl:BC,n:8,dy:163},{sp:BEE,cl:BC,n:8,dy:189}
       ];
       rows.forEach(function(row){
-        var spc=Math.min((W-60)/(row.n-1),38), tot=spc*(row.n-1), sx=(W-tot)/2;
-        for(var i=0;i<row.n;i++) fm.push({sp:row.sp,cl:row.cl,hx:sx+i*spc,hy:row.dy,x:sx+i*spc,y:row.dy,alive:true,div:false,dp:0,dst:0,dsy:0,dty:0});
+        var spc=Math.min((W-40)/(row.n-1||1),42), tot=spc*(row.n-1), sx=(W-tot)/2;
+        for(var i=0;i<row.n;i++) fm.push({sp:row.sp,cl:row.cl,hx:sx+i*spc,hy:row.dy,x:sx+i*spc,y:row.dy,alive:true,div:false,dp:0,dsx:0,dsy:0,dst:0,spd:0});
       });
     }
-    mkFm();
+    setTimeout(function(){ mkFm(); }, 60);
 
-    var px=W/2, py=0, pdir=1;
-    function initP(){ px=W/2; py=H-36; }
-    initP();
+    var px=210, py=600, pdir=1;
+    function initP(){ px=W/2||210; py=(H||700)-40; }
+    setTimeout(initP, 60);
 
     var pbulls=[], ebulls=[], expls=[], fn=0, diveT=0, shootT=0;
 
@@ -776,6 +784,7 @@
     function loop(){
       requestAnimationFrame(loop);
       fn++;
+      if(!W||!H) return;
       gx.clearRect(0,0,W,H);
 
       // Stars
@@ -785,7 +794,7 @@
       });
 
       // Formation drift
-      fmX+=0.5*fmDir; if(Math.abs(fmX)>35) fmDir*=-1;
+      fmX+=0.5*fmDir; if(Math.abs(fmX)>30) fmDir*=-1;
 
       // Dive timer
       diveT++; if(diveT>160){diveT=0; dive(); if(Math.random()<0.4) dive();}
@@ -797,7 +806,7 @@
       }
 
       // Player move
-      px+=pdir*1.2; if(px>W-25) pdir=-1; if(px<25) pdir=1;
+      px+=pdir*1.2; if(px>W-20) pdir=-1; if(px<20) pdir=1;
 
       // Player shoot
       shootT++; if(shootT>55){shootT=0; pbulls.push({x:px,y:py-8,s:7});}
@@ -820,22 +829,20 @@
           if(t<Math.PI){
             var prog=t/Math.PI;
             e.x=e.dsx+(e.dst-e.dsx)*prog+Math.sin(t*2)*28;
-            e.y=e.dsy+(H*0.72-e.dsy)*Math.sin(prog*Math.PI*0.5)*2*Math.min(prog*2,1);
+            e.y=e.dsy+(H*0.7-e.dsy)*Math.sin(prog*Math.PI*0.5)*2*Math.min(prog*2,1);
           } else if(t<Math.PI*1.5){
             var p2=(t-Math.PI)/(Math.PI*0.5);
-            e.y=H*0.72-(H*0.72-e.hy)*p2; e.x=e.dst+(e.hx-e.dst)*p2;
+            e.y=H*0.7-(H*0.7-e.hy)*p2; e.x=e.dst+(e.hx-e.dst)*p2;
           } else { e.div=false; e.dp=0; e.x=e.hx; e.y=e.hy; }
-          if(fn%45===0&&e.y<H-80) ebulls.push({x:e.x,y:e.y+8,s:4});
+          if(fn%45===0&&e.y<H-60) ebulls.push({x:e.x,y:e.y+8,s:4});
         }
         if(e.div&&fn%4<2) gx.globalAlpha=0.7;
         ds(e.sp,e.cl,e.x,e.y);
         gx.globalAlpha=1;
-        // Collision
         pbulls.forEach(function(b){ if(Math.abs(b.x-e.x)<10&&Math.abs(b.y-e.y)<9){e.alive=false;b.y=-999;addExp(e.x,e.y);} });
       });
 
-      // Respawn
-      if(fm.every(function(e){return !e.alive;})){mkFm();fmX=0;}
+      if(fm.length&&fm.every(function(e){return !e.alive;})){mkFm();fmX=0;}
 
       // Player
       ds(PLY,PC,px,py);
