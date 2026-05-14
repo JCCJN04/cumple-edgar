@@ -1,7 +1,26 @@
 {
   "permissions": {
     "allow": [
-      "Bash(claude mcp:*)"
+      "Bash(claude mcp:*)",
+      "mcp__tally__list_workspaces",
+      "mcp__claude_ai_Notion__notion-search",
+      "mcp__claude_ai_Notion__notion-fetch",
+      "mcp__claude_ai_Notion__notion-create-database",
+      "mcp__tally__create_new_form",
+      "mcp__tally__create_blocks",
+      "mcp__claude_ai_Notion__notion-update-page",
+      "mcp__tally__list_blocks",
+      "mcp__tally__configure_blocks",
+      "mcp__tally__save_form",
+      "mcp__tally__update_styling",
+      "mcp__tally__inspect_custom_css",
+      "mcp__tally__update_custom_css",
+      "Bash(yt-dlp -x --audio-format mp3 --audio-quality 0 -o \"public/cancion.mp3\" \"https://youtu.be/dwDns8x3Jb4\")",
+      "Bash(yt-dlp -x --audio-format mp3 --audio-quality 0 --force-overwrites -o \"public/cancion_nueva.%\\(ext\\)s\" \"https://youtu.be/dwDns8x3Jb4\")",
+      "Bash(cp public/cancion_nueva.mp3 public/cancion.mp3)",
+      "Bash(cp public/cancion_nueva.mp3 public/cancion2.mp3)",
+      "Bash(cp public/cancion_nueva.mp3 dist/cancion.mp3)",
+      "Bash(rm public/cancion_nueva.mp3)"
     ]
   }
 }

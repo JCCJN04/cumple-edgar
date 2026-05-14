@@ -422,6 +422,12 @@
       </div>
     </div>
 
+    <!-- Mario Bros Mini Game -->
+    <div style="margin-bottom:24px;">
+      <p style="font-family:'VT323',monospace;font-size:1.1rem;color:#ff4444;text-shadow:0 0 8px #ff4444,0 0 20px #ff4444;letter-spacing:0.2em;text-align:center;margin-bottom:8px;">▶ MARIO WORLD ◀</p>
+      <canvas id="mario-canvas" style="display:block;width:100%;image-rendering:pixelated;border:2px solid #ff4444;box-shadow:0 0 10px #ff4444,0 0 24px rgba(255,68,68,0.3);"></canvas>
+    </div>
+
     <!-- Court Divider -->
     <div class="flex items-center justify-center gap-2 mb-6 opacity-80">
       <div class="h-px bg-jordan-red w-full"></div>
@@ -1064,6 +1070,270 @@
       exps.forEach(function(ex){ex.life--;ex.pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=0.04;p.life-=0.028;if(p.life<=0)return;ctx.globalAlpha=p.life;ctx.fillStyle=p.c;ctx.fillRect(p.x,p.y,p.s,p.s);});ctx.globalAlpha=1;});
     }
     loop3();
+  })();
+
+  // ══ MARIO WORLD MINI GAME ══
+  (function(){
+    var c = document.getElementById('mario-canvas');
+    if(!c) return;
+    var ctx = c.getContext('2d');
+    var W = 380, H = 150, P = 2;
+    c.width = W; c.height = H;
+    ctx.imageSmoothingEnabled = false;
+    var GY = H - 20;
+
+    // Mario colors: 1=red, 2=skin, 3=brown, 4=blue
+    var MC = [null,'#e03020','#f8b888','#704820','#6080f0'];
+    // Walk A
+    var MA = [
+      [0,0,1,1,1,1,0,0],
+      [0,1,1,1,1,1,1,0],
+      [0,3,3,2,2,2,0,0],
+      [0,3,2,2,2,2,3,0],
+      [0,2,2,2,2,2,2,0],
+      [0,0,4,4,4,0,0,0],
+      [0,4,4,4,4,4,0,0],
+      [2,2,4,0,4,2,2,0],
+      [2,2,4,0,4,2,2,0],
+      [0,0,3,0,3,0,0,0],
+      [0,3,3,0,3,3,0,0],
+    ];
+    // Walk B
+    var MB = [
+      [0,0,1,1,1,1,0,0],
+      [0,1,1,1,1,1,1,0],
+      [0,3,3,2,2,2,0,0],
+      [0,3,2,2,2,2,3,0],
+      [0,2,2,2,2,2,2,0],
+      [0,0,4,4,4,0,0,0],
+      [0,4,4,4,4,4,0,0],
+      [2,2,0,4,0,2,2,0],
+      [0,2,4,4,2,0,0,0],
+      [0,3,3,0,0,3,0,0],
+      [0,3,0,0,0,3,3,0],
+    ];
+    // Jump
+    var MJ = [
+      [0,0,1,1,1,1,0,0],
+      [0,1,1,1,1,1,1,0],
+      [0,3,3,2,2,2,0,0],
+      [0,3,2,2,2,2,3,0],
+      [0,2,2,2,2,2,2,0],
+      [2,0,4,4,4,0,2,0],
+      [2,4,4,4,4,4,2,0],
+      [0,4,0,0,0,4,0,0],
+      [0,3,0,0,0,3,0,0],
+      [0,3,3,0,3,3,0,0],
+      [0,0,0,0,0,0,0,0],
+    ];
+
+    // Goomba colors: 1=dark brown, 2=orange-red, 3=tan
+    var GC = [null,'#804000','#e05000','#c07030'];
+    var GA = [
+      [0,1,1,1,1,1,1,0],
+      [1,1,1,1,1,1,1,1],
+      [1,2,1,1,1,1,2,1],
+      [1,1,1,1,1,1,1,1],
+      [1,1,3,3,3,3,1,1],
+      [0,1,1,1,1,1,1,0],
+      [3,1,1,0,0,1,1,3],
+      [3,3,0,0,0,0,3,3],
+    ];
+    var GB = [
+      [0,1,1,1,1,1,1,0],
+      [1,1,1,1,1,1,1,1],
+      [1,2,1,1,1,1,2,1],
+      [1,1,1,1,1,1,1,1],
+      [1,1,3,3,3,3,1,1],
+      [0,1,1,1,1,1,1,0],
+      [3,3,1,0,0,1,3,3],
+      [0,3,0,0,0,0,3,0],
+    ];
+
+    function spr(data, cl, x, y) {
+      for(var r=0; r<data.length; r++)
+        for(var cc=0; cc<data[r].length; cc++) {
+          var ci=data[r][cc]; if(!ci) continue;
+          ctx.fillStyle=cl[ci];
+          ctx.fillRect(Math.round(x+cc*P),Math.round(y+r*P),P,P);
+        }
+    }
+
+    function drawGround(scrollX) {
+      ctx.fillStyle='#c07820'; ctx.fillRect(0,GY,W,H-GY);
+      ctx.fillStyle='#e08030'; ctx.fillRect(0,GY,W,2);
+      var BW=16, off=Math.round(scrollX)%(BW*2);
+      ctx.fillStyle='rgba(0,0,0,0.22)';
+      for(var tx=-off; tx<W+BW; tx+=BW) ctx.fillRect(Math.round(tx),GY,1,H-GY);
+      for(var ty=GY+7; ty<H; ty+=7) { ctx.fillStyle='rgba(0,0,0,0.12)'; ctx.fillRect(0,ty,W,1); }
+    }
+
+    function drawQBlock(x, y, hit) {
+      var S=16;
+      ctx.fillStyle=hit?'#a06820':'#e09030'; ctx.fillRect(x,y,S,S);
+      if(!hit){
+        ctx.fillStyle='#f8b040'; ctx.fillRect(x+1,y+1,S-2,3); ctx.fillRect(x+1,y+1,3,S-2);
+        ctx.fillStyle='#fff'; ctx.font='bold 11px monospace';
+        ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.fillText('?',x+S/2,y+S/2+1);
+      }
+      ctx.strokeStyle='#805018'; ctx.lineWidth=1; ctx.strokeRect(x+0.5,y+0.5,S-1,S-1);
+    }
+
+    function drawPipe(sx, topY) {
+      var PW=24, TH=10, PH=GY-topY;
+      ctx.fillStyle='#008800'; ctx.fillRect(sx+2,topY+TH,PW-4,PH-TH);
+      ctx.fillStyle='#00aa00'; ctx.fillRect(sx+3,topY+TH,5,PH-TH);
+      ctx.fillStyle='#005500'; ctx.fillRect(sx+PW-5,topY+TH,3,PH-TH);
+      ctx.fillStyle='#009900'; ctx.fillRect(sx,topY,PW,TH);
+      ctx.fillStyle='#00cc00'; ctx.fillRect(sx+2,topY+1,5,TH-2);
+      ctx.fillStyle='#006600'; ctx.fillRect(sx+PW-4,topY,4,TH);
+    }
+
+    var LEVEL_W = 1300;
+    var goombaInit = [
+      {wx:190,vx:0.7},{wx:320,vx:0.8},{wx:460,vx:0.75},
+      {wx:580,vx:0.8},{wx:720,vx:0.7},{wx:880,vx:0.85},{wx:1050,vx:0.75}
+    ];
+    var qblockDef = [
+      {wx:130,wy:GY-50},{wx:170,wy:GY-50},{wx:210,wy:GY-50},
+      {wx:390,wy:GY-65},{wx:530,wy:GY-50},{wx:570,wy:GY-50},
+      {wx:760,wy:GY-65},{wx:800,wy:GY-50},
+      {wx:960,wy:GY-50},{wx:1000,wy:GY-50}
+    ];
+    var pipeDef = [
+      {wx:270,topY:GY-52},{wx:450,topY:GY-68},
+      {wx:650,topY:GY-44},{wx:870,topY:GY-60},{wx:1080,topY:GY-52}
+    ];
+
+    var goombas, qblocks, scrollX, marioSX, marioWX, marioY, marioVY, marioJump, mFr, mFt, coins3, popAnims, fmario;
+
+    function reset() {
+      scrollX=0; marioSX=50; marioWX=50;
+      marioY=GY-MA.length*P; marioVY=0; marioJump=false;
+      mFr=0; mFt=0; coins3=0; popAnims=[]; fmario=0;
+      goombas=goombaInit.map(function(g){return {wx:g.wx,vx:g.vx,fr:0,ft:0,alive:true};});
+      qblocks=qblockDef.map(function(q){return {wx:q.wx,wy:q.wy,hit:false,pop:0};});
+    }
+    reset();
+
+    var stars3=[];
+    for(var i=0;i<18;i++) stars3.push({x:Math.random()*W,y:Math.random()*(GY-10),a:Math.random()*0.35+0.1});
+
+    function loop4(){
+      requestAnimationFrame(loop4);
+      fmario++;
+
+      ctx.fillStyle='#0a0a1e'; ctx.fillRect(0,0,W,H);
+      stars3.forEach(function(s){ctx.fillStyle='rgba(255,255,255,'+s.a+')';ctx.fillRect(s.x,s.y,1,1);});
+
+      drawGround(scrollX);
+
+      qblocks.forEach(function(q){
+        var sx=q.wx-scrollX;
+        if(sx<-20||sx>W+20) return;
+        drawQBlock(sx,q.wy,q.hit);
+        if(q.pop>0){
+          ctx.globalAlpha=q.pop/14;
+          ctx.fillStyle='#f8e000'; ctx.font='bold 9px monospace';
+          ctx.textAlign='center'; ctx.textBaseline='alphabetic';
+          ctx.fillText('+1',sx+8,q.wy-(14-q.pop)*2.5);
+          ctx.globalAlpha=1;
+          q.pop--;
+        }
+      });
+
+      pipeDef.forEach(function(p){
+        var sx=p.wx-scrollX;
+        if(sx<-30||sx>W+10) return;
+        drawPipe(sx,p.topY);
+      });
+
+      goombas.forEach(function(g){
+        if(!g.alive) return;
+        var sx=g.wx-scrollX;
+        if(sx<-20||sx>W+20){ g.wx-=g.vx; return; }
+        g.ft++; if(g.ft>18){g.ft=0;g.fr=1-g.fr;}
+        spr(g.fr===0?GA:GB,GC,sx,GY-GA.length*P);
+        g.wx-=g.vx;
+        if(g.wx<10||g.wx>LEVEL_W-10) g.vx*=-1;
+        pipeDef.forEach(function(p){
+          if(Math.abs(g.wx-p.wx-12)<18) g.vx=g.wx<p.wx?-Math.abs(g.vx):Math.abs(g.vx);
+        });
+      });
+
+      // AI: jump over obstacles ahead
+      if(!marioJump){
+        var jump=false;
+        goombas.forEach(function(g){
+          if(!g.alive) return;
+          var d=g.wx-marioWX; if(d>0&&d<72) jump=true;
+        });
+        pipeDef.forEach(function(p){
+          var d=p.wx-marioWX; if(d>0&&d<56) jump=true;
+        });
+        if(jump){marioVY=-8.5;marioJump=true;}
+      }
+
+      // Physics
+      marioVY+=0.45; marioY+=marioVY;
+      var gnd=GY-MA.length*P;
+      if(marioY>=gnd){marioY=gnd;marioVY=0;marioJump=false;}
+
+      // Scroll
+      var THRESH=W*0.38;
+      if(marioSX>THRESH){scrollX+=1.8;}else{marioSX+=1.8;}
+      marioWX=scrollX+marioSX;
+      if(scrollX>LEVEL_W-W+60){reset();return;}
+
+      // Q-block hit from below
+      qblocks.forEach(function(q){
+        if(q.hit) return;
+        var sx=q.wx-scrollX;
+        if(Math.abs(marioSX+8-(sx+8))<14&&marioVY<0){
+          var mTop=marioY, qBot=q.wy+16;
+          if(mTop<=qBot+2&&mTop>=q.wy-5){
+            q.hit=true; q.pop=14; coins3++;
+            marioVY=Math.max(marioVY,2);
+          }
+        }
+      });
+
+      // Stomp goomba
+      goombas.forEach(function(g){
+        if(!g.alive) return;
+        var gsx=g.wx-scrollX;
+        if(Math.abs(marioSX+8-(gsx+8))<13&&marioVY>0){
+          var mBot=marioY+MA.length*P, gTop=GY-GA.length*P;
+          if(mBot>=gTop-2&&mBot<=gTop+10){
+            g.alive=false; marioVY=-6; coins3+=100;
+            popAnims.push({x:gsx,y:gTop-8,t:'+100',life:25});
+          }
+        }
+      });
+
+      // Draw Mario
+      mFt++; if(!marioJump&&mFt>8){mFt=0;mFr=1-mFr;}
+      spr(marioJump?MJ:(mFr===0?MA:MB),MC,marioSX,marioY);
+
+      // HUD
+      ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+      ctx.font='bold 8px monospace';
+      ctx.fillStyle='#ff4444'; ctx.fillText('MARIO WORLD',4,11);
+      ctx.fillStyle='#f8e000'; ctx.fillText('★ '+String(coins3).padStart(4,'0'),W-58,11);
+
+      // Pop anims
+      popAnims=popAnims.filter(function(pa){return pa.life>0;});
+      popAnims.forEach(function(pa){
+        pa.life--; pa.y-=0.5;
+        ctx.globalAlpha=pa.life/25;
+        ctx.fillStyle='#f8e000'; ctx.font='bold 9px monospace';
+        ctx.textAlign='center'; ctx.fillText(pa.t,pa.x,pa.y);
+        ctx.globalAlpha=1;
+      });
+      ctx.textAlign='left';
+    }
+    loop4();
   })();
 </script>
 </body>
